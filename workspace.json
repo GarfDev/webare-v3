@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "projects": {
+    "discord-gateway": "packages/discord-gateway",
+    "the-node": "packages/the-node",
+    "website": "packages/website"
+  }
+}

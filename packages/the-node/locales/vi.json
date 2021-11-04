@@ -1,0 +1,5 @@
+{
+	"already_matched": "Hãy thoát cuộc trò chuyện hiện tại trước khi thực hiện điều này",
+  "join_queue.failed": "Có vấn đề với quá trình ghép đôi, vui lòng thử lại..",
+	"join_queue.success": "Đang tiến hành ghép đôi.."
+}
