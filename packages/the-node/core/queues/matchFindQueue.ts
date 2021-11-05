@@ -38,7 +38,6 @@ matchFindQueue.process(async (_: Job<any>, done: DoneCallback<any>) => {
       matchedCount += 1;
     }
   } catch (e) {
-    console.log('Error while matching', e);
   }
 
   done(null, `Matched ${matchedCount} pair this time`);

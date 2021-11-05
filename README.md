@@ -8,8 +8,15 @@ A cross-platform bot that creating anonymous conversations
 
 # Platforms supported
 
-- Discord
-- Website
+- [X] Discord
+- [X] Website
+- [ ] Mobile
+- [ ] Messenger
+- [ ] Instagram
+- [ ] Zalo
+- [ ] Telegram
+- [ ] Whatapp
+
 
 ### Prerequisites
 

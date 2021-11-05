@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { io } from 'socket.io-client';
-import { Client, Intents } from 'discord.js';
-import { getUniqueId } from './core/utils/getUniqueId';
 import dotenv from 'dotenv';
+import { io } from 'socket.io-client';
+import { Collection, Intents } from 'discord.js';
+import { webareClient } from './client';
+import { getUniqueId } from 'core/utils/getUniqueId';
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ export enum EventType {
 }
 
 // Create a new client instance
-const client = new Client({
+const client = new webareClient({
   partials: ['CHANNEL'],
   intents: [
     'DIRECT_MESSAGES',
@@ -26,11 +27,10 @@ const client = new Client({
     Intents.FLAGS.DIRECT_MESSAGE_TYPING,
   ],
 });
-const socket = io('http://localhost:5000');
+const socket = io(process.env.MAIN_NODE_URL);
 
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
-  console.log('Ready!');
   socket.connect();
 });
 
@@ -39,7 +39,6 @@ process.on('unhandledRejection', (error) => {
 });
 
 socket.on('connect', async () => {
-  console.log('Connected');
   socket.emit(EventType.HANDSHAKE, {
     client_id: await getUniqueId(),
   });
@@ -50,27 +49,27 @@ client.on('messageCreate', async (message) => {
   if (message.author.id === client.user.id) return;
 
   switch (message.content) {
-    case '/join queue': {
-      const res = await axios.post('http://localhost:5000/queue/join', {
-        author: { id: message.author.id },
-      });
-      message.channel.send(res.data.message);
-      break;
-    }
-    case '/leave queue': {
-      const res = await axios.post('http://localhost:5000/queue/leave', {
-        author: { id: message.author.id },
-      });
-      message.channel.send(res.data.message);
-      break;
-    }
-    case '/leave match': {
-      const res = await axios.post('http://localhost:5000/match/leave', {
-        author: { id: message.author.id },
-      });
-      message.channel.send(res.data.message);
-      break;
-    }
+    // case '/join queue': {
+    //   const res = await axios.post('http://localhost:5000/queue/join', {
+    //     author: { id: message.author.id },
+    //   });
+    //   message.channel.send(res.data.message);
+    //   break;
+    // }
+    // case '/leave queue': {
+    //   const res = await axios.post('http://localhost:5000/queue/leave', {
+    //     author: { id: message.author.id },
+    //   });
+    //   message.channel.send(res.data.message);
+    //   break;
+    // }
+    // case '/leave match': {
+    //   const res = await axios.post('http://localhost:5000/match/leave', {
+    //     author: { id: message.author.id },
+    //   });
+    //   message.channel.send(res.data.message);
+    //   break;
+    // }
     default:
       socket.emit(EventType.MESSAGE, {
         meta: { client_id: await getUniqueId() },
@@ -85,7 +84,6 @@ socket.on(EventType.RECEIVE_MESSAGE, async (message) => {
     const channel = await client.users.fetch(message.receiver.uuid);
     channel.send(message.content.text);
   } catch (e) {
-    console.log(e);
   }
 });
 
@@ -94,7 +92,6 @@ socket.on(EventType.NO_ROUTING, async (message) => {
     const channel = await client.users.fetch(message.receiver.uuid);
     channel.send(message.content.text);
   } catch (e) {
-    console.log(e);
   }
 });
 

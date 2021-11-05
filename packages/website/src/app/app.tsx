@@ -12,7 +12,6 @@ const App = (): JSX.Element => {
   React.useEffect(() => {
 
     socket.on('connect', () => {
-      console.log('Connected')
       socket.emit('HANDSHAKE', {
         client_id: getUniqueId()
        })
