@@ -1,0 +1,19 @@
+{
+  "name": "@webare-v3/messenger-gateway",
+  "scripts": {
+    "serve": "nodemon",
+    "test": "node index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.6",
+    "nodemon": "^2.0.14",
+    "ts-node": "^10.4.0",
+    "tsconfig-paths": "^3.11.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "messaging-api-messenger": "^1.1.0"
+  }
+}
