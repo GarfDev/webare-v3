@@ -1,3 +1,4 @@
+import { getI18n } from 'core/i18n';
 import { Socket } from 'socket.io';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 import { EventType } from '../../core/constants/eventTypes';
@@ -9,6 +10,7 @@ export const onMessage = (
   socket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap>
 ) => {
   return async (args: any) => {
+    const i18n = getI18n();
     const redisClient = await getRedisClient();
     await redisClient.hSet(
       RedisSet.SOCKET_ID_MAP,
@@ -40,7 +42,7 @@ export const onMessage = (
       socket.emit(EventType.NO_ROUTING, {
         receiver: { uuid: args.author.uuid },
         content: {
-          text: 'not_matched_yet'
+          text: i18n.__('error.not_matched_yet')
         },
       });
     }
