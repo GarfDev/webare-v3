@@ -1,5 +1,4 @@
 import express from 'express';
-import { Server } from 'socket.io';
 import cors from 'cors';
 
 import { EventType } from './core/constants/eventTypes';
@@ -9,9 +8,8 @@ import { onMessage } from './listeners/onMessages';
 
 import { getI18n } from './core/i18n';
 import { getRedisClient } from './core/redis';
+import { createSocketServer } from './core/socket';
 import { rootRouter } from './routers';
-
-export let io: Server = null;
 
 const application = async () => {
   const PORT = 5000;
@@ -32,11 +30,7 @@ const application = async () => {
   });
 
   // Socket setup
-  io = new Server(server, {
-    cors: {
-      origin: '*',
-    },
-  });
+  const io = createSocketServer(server);
 
   io.on('connection', function (socket) {
     socket.on(EventType.HANDSHAKE, onHandshake(socket));

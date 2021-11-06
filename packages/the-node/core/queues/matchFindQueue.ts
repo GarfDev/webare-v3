@@ -1,7 +1,10 @@
 import Queue, { Job, DoneCallback } from 'bee-queue';
+import { getI18n } from 'core/i18n';
 import { MatchQueueSet } from '../constants/matchQueueSet';
 import { RedisSet } from '../constants/redisSet';
 import { getRedisClient } from '../redis';
+import { returnMessageQueue } from './returnMessageQueue';
+
 
 const getRandomIndex = (array: any[]): number => {
   return Math.floor(Math.random() * array.length);
@@ -11,9 +14,10 @@ export const matchFindQueue = new Queue('matchFindQueue', {
   isWorker: true,
   stallInterval: 5000,
   delayedDebounce: 5000,
- });
+});
 
 matchFindQueue.process(async (_: Job<any>, done: DoneCallback<any>) => {
+  const i18n = getI18n();
   const redisClient = await getRedisClient();
   let candidates = await redisClient.hKeys(MatchQueueSet.GENERAL);
   let matchedCount = 0;
@@ -24,7 +28,10 @@ matchFindQueue.process(async (_: Job<any>, done: DoneCallback<any>) => {
         break;
       }
 
-      // Match logic
+      /**
+       * Match logic
+       */
+
       const candidateOneIndex = getRandomIndex(candidates);
       const candidateOne = candidates.splice(candidateOneIndex, 1)[0];
       const candidateTwoIndex = getRandomIndex(candidates);
@@ -35,10 +42,12 @@ matchFindQueue.process(async (_: Job<any>, done: DoneCallback<any>) => {
       await redisClient.hDel(MatchQueueSet.GENERAL, candidateOne);
       await redisClient.hDel(MatchQueueSet.GENERAL, candidateTwo);
 
+      await returnMessageQueue.createJob({ receiver: { uuid: candidateOne }, content: { text: i18n.__('match_found') } }).save();
+      await returnMessageQueue.createJob({ receiver: { uuid: candidateTwo }, content: { text: i18n.__('match_found') } }).save();
+
       matchedCount += 1;
     }
-  } catch (e) {
-  }
+  } catch (e) {}
 
   done(null, `Matched ${matchedCount} pair this time`);
 });

@@ -4,7 +4,8 @@ import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 import { EventType } from '../../core/constants/eventTypes';
 import { RedisSet } from '../../core/constants/redisSet';
 import { getRedisClient } from '../../core/redis';
-import { io } from '../../index';
+
+import { returnMessageQueue } from '../../core/queues/returnMessageQueue';
 
 export const onMessage = (
   socket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap>
@@ -24,25 +25,15 @@ export const onMessage = (
     );
 
     if (matchedId) {
-      const matchClientId = await redisClient.hGet(
-        RedisSet.SOCKET_ID_MAP,
-        matchedId
-      );
-      const cachedSocketId = await redisClient.hGet(
-        RedisSet.CLIENT_ID_MAP,
-        matchClientId
-      );
-
-      const toEmitSocket = io.to(cachedSocketId) || socket;
-      toEmitSocket.emit(EventType.RECEIVE_MESSAGE, {
+      await returnMessageQueue.createJob({
         receiver: { uuid: matchedId },
         content: args.content,
-      });
+      }).save();
     } else {
       socket.emit(EventType.NO_ROUTING, {
         receiver: { uuid: args.author.uuid },
         content: {
-          text: i18n.__('error.not_matched_yet')
+          text: i18n.__('error.not_matched_yet'),
         },
       });
     }
