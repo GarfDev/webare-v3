@@ -1,9 +1,10 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
 import { io } from 'socket.io-client';
-import { Collection, Intents } from 'discord.js';
-import { webareClient } from './client';
+import { Intents } from 'discord.js';
+import { getI18n } from 'core/i18n';
 import { getUniqueId } from 'core/utils/getUniqueId';
+import { webareClient } from './client';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ export enum EventType {
 }
 
 // Create a new client instance
+const i18n = getI18n();
 const client = new webareClient({
   partials: ['CHANNEL'],
   intents: [
@@ -49,27 +51,27 @@ client.on('messageCreate', async (message) => {
   if (message.author.id === client.user.id) return;
 
   switch (message.content) {
-    // case '/join queue': {
-    //   const res = await axios.post('http://localhost:5000/queue/join', {
-    //     author: { id: message.author.id },
-    //   });
-    //   message.channel.send(res.data.message);
-    //   break;
-    // }
-    // case '/leave queue': {
-    //   const res = await axios.post('http://localhost:5000/queue/leave', {
-    //     author: { id: message.author.id },
-    //   });
-    //   message.channel.send(res.data.message);
-    //   break;
-    // }
-    // case '/leave match': {
-    //   const res = await axios.post('http://localhost:5000/match/leave', {
-    //     author: { id: message.author.id },
-    //   });
-    //   message.channel.send(res.data.message);
-    //   break;
-    // }
+    case '!find': {
+      const res = await axios.post(`${process.env.MAIN_NODE_URL}/queue/join`, {
+        author: { id: message.author.id },
+      });
+      message.channel.send(i18n.__(res.data.message));
+      break;
+    }
+    case '!leave': {
+      const res = await axios.post(`${process.env.MAIN_NODE_URL}/match/leave`, {
+        author: { platform: 'discord', id: message.author.id },
+      });
+      message.channel.send(i18n.__(res.data.message));
+      break;
+    }
+    case '!leave:queue': {
+      const res = await axios.post(`${process.env.MAIN_NODE_URL}/queue/leave`, {
+        author: { platform: 'discord', id: message.author.id },
+      });
+      message.channel.send(i18n.__(res.data.message));
+      break;
+    }
     default:
       socket.emit(EventType.MESSAGE, {
         meta: { client_id: await getUniqueId() },
@@ -90,7 +92,7 @@ socket.on(EventType.RECEIVE_MESSAGE, async (message) => {
 socket.on(EventType.NO_ROUTING, async (message) => {
   try {
     const channel = await client.users.fetch(message.receiver.uuid);
-    channel.send(message.content.text);
+    channel.send(i18n.__(message.content.text));
   } catch (e) {
   }
 });

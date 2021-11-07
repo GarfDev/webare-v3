@@ -1,7 +1,0 @@
-{
-	"error.already_matched": "Hãy thoát cuộc trò chuyện hiện tại trước khi thực hiện điều này",
-	"error.not_matched_yet": "Bạn chưa ghép đôi với ai cả",
-	"join_queue.failed": "Có vấn đề với quá trình ghép đôi, vui lòng thử lại..",
-	"join_queue.success": "Đang tiến hành ghép đôi..",
-	"match_found": "Ghép đôi thành công, mình mong bạn sẽ có những trải nghiệm tích cực"
-}

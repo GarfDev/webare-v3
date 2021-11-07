@@ -12,12 +12,15 @@ export const joinQueue = async (req: Request, res: Response) => {
       RedisSet.MATCHES_MAP,
       postPayload.author.id,
     );
-    if (matched) return res.send({ message: res.__('error.already_matched') });
+    if (matched) {
+      return res.send({ message: 'error.already_matched' });
+    }
+
     await redisClient.hSet(MatchQueueSet.GENERAL, postPayload.author.id, '');
     await matchFindQueue.createJob({}).save();
 
-    return res.send({ message: res.__('join_queue.success') });
+    return res.send({ message: 'join_queue.success' });
   } catch (e) {
-    return res.send({ message: res.__('join_queue.error') });
+    return res.send({ message: 'join_queue.error' });
   }
 };

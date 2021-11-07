@@ -6,7 +6,6 @@ import { RedisSet } from './core/constants/redisSet';
 import { onHandshake } from './listeners/onHandshake';
 import { onMessage } from './listeners/onMessages';
 
-import { getI18n } from './core/i18n';
 import { getRedisClient } from './core/redis';
 import { createSocketServer } from './core/socket';
 import { rootRouter } from './routers';
@@ -14,11 +13,9 @@ import { rootRouter } from './routers';
 const application = async () => {
   const PORT = 5000;
   const app = express();
-  const i18n = getI18n();
 
   app.use(cors({ origin: '*' }));
   app.use(express.json());
-  app.use(i18n.init);
 
   await getRedisClient();
 
