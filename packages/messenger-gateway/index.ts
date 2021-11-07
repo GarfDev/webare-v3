@@ -160,7 +160,7 @@ const application = async () => {
 
   // listen for requests :)
   var listener = app.listen(process.env.PORT, function () {
-    console.log('Your app is listening on port ' + listener.address().toString());
+    console.log('Your app is listening on port ' + process.env.PORT);
   });
 };
 
