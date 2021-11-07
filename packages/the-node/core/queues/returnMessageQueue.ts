@@ -11,6 +11,7 @@ export interface ReturnMessagePayload {
     uuid: string;
   };
   content: {
+    system?: boolean;
     text: string;
   };
 }

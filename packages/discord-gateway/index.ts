@@ -84,7 +84,11 @@ client.on('messageCreate', async (message) => {
 socket.on(EventType.RECEIVE_MESSAGE, async (message) => {
   try {
     const channel = await client.users.fetch(message.receiver.uuid);
-    channel.send(message.content.text);
+    if (message.content.system) {
+      channel.send(i18n.__(message.content.text));
+    } else {
+      channel.send(message.content.text);
+    }
   } catch (e) {
   }
 });

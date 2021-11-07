@@ -4,7 +4,6 @@ import { RedisSet } from '../constants/redisSet';
 import { getRedisClient } from '../redis';
 import { returnMessageQueue } from './returnMessageQueue';
 
-
 const getRandomIndex = (array: any[]): number => {
   return Math.floor(Math.random() * array.length);
 };
@@ -40,8 +39,18 @@ matchFindQueue.process(async (_: Job<any>, done: DoneCallback<any>) => {
       await redisClient.hDel(MatchQueueSet.GENERAL, candidateOne);
       await redisClient.hDel(MatchQueueSet.GENERAL, candidateTwo);
 
-      await returnMessageQueue.createJob({ receiver: { uuid: candidateOne }, content: { text: 'match_found' } }).save();
-      await returnMessageQueue.createJob({ receiver: { uuid: candidateTwo }, content: { text: 'match_found' } }).save();
+      await returnMessageQueue
+        .createJob({
+          receiver: { uuid: candidateOne },
+          content: { text: 'match_found', system: true },
+        })
+        .save();
+      await returnMessageQueue
+        .createJob({
+          receiver: { uuid: candidateTwo },
+          content: { text: 'match_found', system: true },
+        })
+        .save();
 
       matchedCount += 1;
     }

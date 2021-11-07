@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "messenger-gateway": "packages/messenger-gateway",
     "discord-gateway": "packages/discord-gateway",
     "the-node": "packages/the-node",
     "website": "packages/website"

@@ -12,12 +12,12 @@ export const leaveMatch = async (req: Request, res: Response) => {
     if (matcherId) {
       await redisClient.hDel(RedisSet.MATCHES_MAP, payload.author.id);
       await redisClient.hDel(RedisSet.MATCHES_MAP, matcherId);
-      return res.send({ message: 'success' })
+      return res.send({ message: 'leave_match.success', system: true })
     }
   } catch {
-    return res.send({ message: 'failed_to_remove' })
+    return res.send({ message: 'error.failed_to_remove', system: true })
 
   }
   // main return
-  return res.send({ message: 'no_match_to_remove' })
+  return res.send({ message: 'error.not_matched_yet', system: true })
 }
