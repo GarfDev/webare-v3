@@ -17,7 +17,7 @@ export interface ReturnMessagePayload {
 }
 
 export const returnMessageQueue = new Queue<ReturnMessagePayload>(
-  'returnMessageQueue',
+  'return_message_queue',
   {
     isWorker: true,
     stallInterval: 100,

@@ -49,6 +49,7 @@ socket.on('connect', async () => {
 client.on('messageCreate', async (message) => {
   if (message.author.bot) return;
   if (message.author.id === client.user.id) return;
+  if (message?.guild?.id) return;
 
   switch (message.content) {
     case '!find': {

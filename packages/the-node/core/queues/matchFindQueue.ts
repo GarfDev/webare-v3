@@ -8,7 +8,7 @@ const getRandomIndex = (array: any[]): number => {
   return Math.floor(Math.random() * array.length);
 };
 
-export const matchFindQueue = new Queue('matchFindQueue', {
+export const matchFindQueue = new Queue('match_find_queue', {
   isWorker: true,
   stallInterval: 5000,
   delayedDebounce: 5000,
