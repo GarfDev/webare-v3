@@ -1,6 +1,7 @@
-import request from 'request';
 import express from 'express';
 import dotenv from 'dotenv';
+
+import { createSocketClient } from './core/socket';
 
 import { verify } from './resources/webhook/verify';
 import { onNewMessage } from './resources/webhook/onNewMessage';
@@ -11,6 +12,8 @@ const application = async () => {
   const app = express();
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
+
+  createSocketClient();
 
   app.get('/webhook',verify);
   app.post('/webhook', onNewMessage)

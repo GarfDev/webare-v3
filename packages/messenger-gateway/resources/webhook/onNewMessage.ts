@@ -1,9 +1,12 @@
+import { getSocket } from 'core/socket';
 import { Request, Response } from 'express';
+import { EventType } from 'core/constants';
+import { getUniqueId } from 'core/utils';
 import { MessagePayload } from '../../core/types';
-import { sendMessage } from './sendMessage';
 
 export const onNewMessage = (req: Request, res: Response) => {
   try {
+    const socket = getSocket();
     const payload: MessagePayload = req.body;
     if (payload.object !== 'page') return;
 
@@ -12,14 +15,10 @@ export const onNewMessage = (req: Request, res: Response) => {
       const uuid = messageEvent.sender.id;
 
       if (messageEvent.message) {
-        await sendMessage({
-          messaging_type: 'RESPONSE',
-          recipient: {
-            id: uuid,
-          },
-          message: {
-            text: messageEvent.message.text,
-          },
+        socket.emit(EventType.MESSAGE, {
+          meta: { client_id: await getUniqueId() },
+          author: { platform: 'messenger', uuid },
+          content: { text: messageEvent.message.text },
         });
       }
     });

@@ -1,0 +1,10 @@
+
+export enum EventType {
+  // IN
+  MESSAGE = 'MESSAGE',
+  HANDSHAKE = 'HANDSHAKE',
+  // OUT
+  MATCHED = 'MATCHED',
+  RECEIVE_MESSAGE = 'RECEIVE_MESSAGE',
+  NO_ROUTING = 'NO_ROUTING',
+}
