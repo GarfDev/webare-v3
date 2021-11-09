@@ -41,7 +41,7 @@ returnMessageQueue.process(
         RedisSet.CLIENT_ID_MAP,
         cachedClientId
       );
-
+        console.log(cachedSocketId);
       const toEmitSocket = io.to(cachedSocketId);
       toEmitSocket.emit(EventType.RECEIVE_MESSAGE, job.data);
     } catch (e) {
