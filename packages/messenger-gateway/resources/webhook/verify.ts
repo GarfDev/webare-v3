@@ -4,7 +4,7 @@ require('dotenv').config();
 
 export const verify = (req: Request, res: Response) => {
   // Your verify token. Should be a random string.
-  const BOT_TOKEN = process.env.BOT_TOKEN;
+  const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
   // Parse the query params
   let mode = req.query['hub.mode'];
@@ -13,7 +13,7 @@ export const verify = (req: Request, res: Response) => {
 
   if (mode && token) {
     // Checks the mode and token sent is correct
-    if (mode === 'subscribe' && token === BOT_TOKEN) {
+    if (mode === 'subscribe' && token === VERIFY_TOKEN) {
       // Responds with the challenge token from the request
       res.status(200).send(challenge);
     } else {
