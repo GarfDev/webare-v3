@@ -4,7 +4,10 @@ import dotenv from 'dotenv';
 import { createSocketClient } from './core/socket';
 
 import { verify } from './resources/webhook/verify';
+import { sendMessage } from './resources/webhook/sendMessage';
 import { onNewMessage } from './resources/webhook/onNewMessage';
+import { EventType } from 'core/constants';
+import { getUniqueId } from 'core/utils';
 
 dotenv.config();
 
@@ -13,10 +16,45 @@ const application = async () => {
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
 
-  createSocketClient();
+  const socket = createSocketClient();
+  socket.connect();
 
-  app.get('/webhook',verify);
-  app.post('/webhook', onNewMessage)
+  app.get('/webhook', verify);
+  app.post('/webhook', onNewMessage);
+
+  socket.on('connect', async () => {
+    socket.emit(EventType.HANDSHAKE, {
+      client_id: await getUniqueId(),
+    });
+  });
+
+  socket.on(EventType.RECEIVE_MESSAGE, async (message) => {
+    try {
+      await sendMessage({
+        messaging_type: 'RESPONSE',
+        recipient: {
+          id: message.receiver.uuid,
+        },
+        message: {
+          text: message.content.text,
+        },
+      });
+    } catch (e) {}
+  });
+
+  socket.on(EventType.NO_ROUTING, async (message) => {
+    try {
+      await sendMessage({
+        messaging_type: 'RESPONSE',
+        recipient: {
+          id: message.receiver.uuid,
+        },
+        message: {
+          text: message.content.text,
+        },
+      });
+    } catch (e) {}
+  });
 
   // app.post('/webhook', (req, res) => {
   //   let body = req.body;

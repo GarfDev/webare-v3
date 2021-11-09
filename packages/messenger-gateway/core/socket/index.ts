@@ -5,7 +5,7 @@ let socket: Socket<DefaultEventsMap, DefaultEventsMap> = null;
 
 export const createSocketClient = () => {
   socket = io(process.env.MAIN_NODE_URL);
-  return io;
+  return socket;
 };
 
 export const getSocket = (): Socket<DefaultEventsMap, DefaultEventsMap> =>
