@@ -18,7 +18,9 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     border: 0;
     font-size: 100%;
-    font-family: Zen Kaku Gothic New;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: Noto Sans;
     vertical-align: baseline;
   }
   /* HTML5 display-role reset for older browsers */
@@ -28,7 +30,15 @@ export const GlobalStyle = createGlobalStyle`
   }
   body {
     line-height: 1;
+    height:100%;
   }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
   ol, ul {
     list-style: none;
   }
