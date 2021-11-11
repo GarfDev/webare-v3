@@ -29,6 +29,17 @@
         "style": "styled-components",
         "linter": "eslint"
       }
+    },
+    "@nrwl/web:application": {
+      "style": "styl",
+      "linter": "eslint",
+      "unitTestRunner": "none",
+      "e2eTestRunner": "none"
+    },
+    "@nrwl/web:library": {
+      "style": "styl",
+      "linter": "eslint",
+      "unitTestRunner": "none"
     }
   },
   "defaultProject": "website"
