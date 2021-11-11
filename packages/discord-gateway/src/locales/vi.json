@@ -6,5 +6,6 @@
 	"join_queue.error": "`Có vấn đề với quá trình ghép đôi, vui lòng thử lại..`",
 	"join_queue.success": "`Đang tiến hành ghép đôi.. Có thể sử dụng lệnh !leave:queue để thoát`",
 	"match_found": "`Ghép đôi thành công, bạn có thể thoát cuộc trò chuyện bằng lệnh: !leave\nMong bạn sẽ có những trải nghiệm tích cực với Webare`",
-	"leave_match.success": "`Thoát cuộc trò chuyện thành công, bạn có thể tiếp tục bằng lệnh: !find`"
+	"leave_match.success": "`Thoát cuộc trò chuyện thành công, bạn có thể tiếp tục bằng lệnh: !find`",
+  "leave_match.other_leaved": "`Người kia đã thoát khỏi cuộc trò chuyện hiện tại, bạn có thể bắt đầu một cuộc trò chuyện mới bằng lệnh: !find`"
 }

@@ -20,6 +20,13 @@ export enum EventType {
 
 // Create a new client instance
 export const application = () => {
+
+  // preflight checks
+  if (!process?.env?.MAIN_NODE_URL) {
+    throw new Error('MAIN_NODE_URL is missing');
+  }
+
+  // flights
   const i18n = getI18n();
   const client = new webareClient({
     partials: ['CHANNEL'],
@@ -30,7 +37,7 @@ export const application = () => {
       Intents.FLAGS.DIRECT_MESSAGE_TYPING,
     ],
   });
-  const socket = io(process.env.MAIN_NODE_URL);
+  const socket = io(process?.env?.MAIN_NODE_URL);
 
   // When the client is ready, run this code (only once)
   client.once('ready', () => {
@@ -49,7 +56,7 @@ export const application = () => {
 
   client.on('messageCreate', async (message) => {
     if (message.author.bot) return;
-    if (message.author.id === client.user.id) return;
+    if (message.author.id === client?.user?.id) return;
     if (message?.guild?.id) return;
 
     switch (message.content) {
