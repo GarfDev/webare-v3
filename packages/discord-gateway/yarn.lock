@@ -1045,6 +1045,13 @@
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
+"@types/node-persist@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@types/node-persist/-/node-persist-3.1.2.tgz#88020628a0124836e98e5c1060591b2dade2bb4a"
+  integrity sha512-aLFUB1951wOfR+tZ4f3TudLPblo9+PfnduMh6feuOTijD0Q6YkMdqPXSgQIjI23FGmCuoZaIZ9x6cvEG/TdiSg==
+  dependencies:
+    "@types/node" "*"
+
 "@types/node@*":
   version "16.11.6"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.6.tgz#6bef7a2a0ad684cf6e90fcfe31cecabd9ce0a3ae"

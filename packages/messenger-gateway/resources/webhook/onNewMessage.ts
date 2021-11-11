@@ -1,11 +1,15 @@
+import axios from 'axios';
 import { getSocket } from 'core/socket';
 import { Request, Response } from 'express';
 import { EventType } from 'core/constants';
 import { getUniqueId } from 'core/utils';
-import { MessagePayload } from '../../core/types';
+import { MessagePayload } from 'core/types';
+import { getI18n } from 'core/i18n';
+import { sendMessage } from './sendMessage';
 
 export const onNewMessage = (req: Request, res: Response) => {
   try {
+    const i18n = getI18n();
     const socket = getSocket();
     const payload: MessagePayload = req.body;
 
@@ -22,7 +26,28 @@ export const onNewMessage = (req: Request, res: Response) => {
           content: { text: messageEvent.message.text },
         });
       } else if (messageEvent.postback) {
+        const postback = messageEvent.postback;
 
+        switch (postback.title) {
+          case 'Bắt đầu': {
+            const res = await axios.post(
+              `${process.env.MAIN_NODE_URL}/queue/join`,
+              {
+                author: { platform: 'messenger', id: messageEvent.sender.id },
+              }
+            );
+            sendMessage({
+              messaging_type: 'RESPONSE',
+              recipient: {
+                id: messageEvent.sender.id,
+              },
+              message: {
+                text: res.data.message,
+              },
+            });
+            break;
+          }
+        }
       }
     });
     res.status(200).send('EVENT_RECEIVED');
