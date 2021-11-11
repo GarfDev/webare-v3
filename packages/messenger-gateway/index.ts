@@ -32,7 +32,6 @@ const application = async () => {
 
   socket.on(EventType.RECEIVE_MESSAGE, async (message) => {
     try {
-      console.log(message)
       await sendMessage({
         messaging_type: 'RESPONSE',
         recipient: {

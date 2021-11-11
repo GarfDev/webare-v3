@@ -8,6 +8,7 @@ export const onNewMessage = (req: Request, res: Response) => {
   try {
     const socket = getSocket();
     const payload: MessagePayload = req.body;
+
     if (payload.object !== 'page') return;
 
     payload.entry.forEach(async (entry) => {
@@ -20,6 +21,8 @@ export const onNewMessage = (req: Request, res: Response) => {
           author: { platform: 'messenger', uuid },
           content: { text: messageEvent.message.text },
         });
+      } else if (messageEvent.postback) {
+
       }
     });
     res.status(200).send('EVENT_RECEIVED');

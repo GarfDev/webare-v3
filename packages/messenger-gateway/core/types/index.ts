@@ -11,11 +11,18 @@ export interface Message {
   text: string;
 }
 
+export interface Postback {
+  title: string;
+  payload: string;
+  mid: string;
+}
+
 export interface MessageEvent {
   sender: Sender;
   recipient: Recipient;
   timestamp: number;
-  message: Message;
+  message?: Message;
+  postback?: Postback;
 }
 
 export interface Entry {

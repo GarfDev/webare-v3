@@ -21,6 +21,7 @@ export const returnMessageQueue = new Queue<ReturnMessagePayload>(
   {
     isWorker: true,
     stallInterval: 100,
+    removeOnSuccess: true,
   }
 );
 
