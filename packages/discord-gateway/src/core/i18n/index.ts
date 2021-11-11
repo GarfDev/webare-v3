@@ -1,5 +1,5 @@
 import { I18n } from 'i18n';
-import { getStaticPath } from '../../../the-node/core/utils/getStaticPath';
+import { getStaticPath } from 'core/utils/getStaticPath';
 
 const createI18nInstance = () => {
   const i18n = new I18n();
