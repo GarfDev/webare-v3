@@ -16,7 +16,7 @@ export const noMatchedYetTemplate: MessagePayload = {
             {
               type: 'postback',
               title: i18n.__('no_matched_yet.start_chatting'),
-              payload: i18n.__('no_matched_yet.start_chatting'),
+              payload: 'FIND_MATCH',
             },
           ],
         },

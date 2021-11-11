@@ -34,16 +34,18 @@ const application = async () => {
     socket.on(EventType.MESSAGE, onMessage(socket));
 
     socket.on('disconnect', async () => {
-      const redisClient = await getRedisClient();
-      const clientIdSet = (await redisClient.hGetAll(
-        RedisSet.CLIENT_ID_MAP
-      )) as Object;
-      const clientIdKey = Object.keys(clientIdSet);
-      const toRemoveKey = clientIdKey.reduce((pre, cur) => {
-        if (clientIdSet[cur] === socket.id) return cur;
-      }, '');
       try {
-        await redisClient.hDel(RedisSet.CLIENT_ID_MAP, toRemoveKey);
+        const redisClient = await getRedisClient();
+        const clientIdSet = (await redisClient.hGetAll(
+          RedisSet.CLIENT_ID_MAP
+        )) as Object;
+        const clientIdKey = Object.keys(clientIdSet);
+        clientIdKey.forEach(async (cur) => {
+          if (clientIdSet[cur] === socket.id) {
+            console.log('Deleting', socket.id)
+            await redisClient.hDel(RedisSet.CLIENT_ID_MAP, socket.id);
+          };
+        });
       } catch {}
     });
   });

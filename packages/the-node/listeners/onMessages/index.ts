@@ -31,6 +31,7 @@ export const onMessage = (
       socket.emit(EventType.NO_ROUTING, {
         receiver: { uuid: args.author.uuid },
         content: {
+          system: true,
           text: 'error.not_matched_yet',
         },
       });

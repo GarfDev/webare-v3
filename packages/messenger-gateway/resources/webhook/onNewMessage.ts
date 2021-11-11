@@ -27,9 +27,9 @@ export const onNewMessage = (req: Request, res: Response) => {
         });
       } else if (messageEvent.postback) {
         const postback = messageEvent.postback;
-
-        switch (postback.title) {
-          case 'Bắt đầu': {
+        console.log(postback);
+        switch (postback.payload) {
+          case 'FIND_MATCH': {
             const res = await axios.post(
               `${process.env.MAIN_NODE_URL}/queue/join`,
               {
@@ -46,6 +46,25 @@ export const onNewMessage = (req: Request, res: Response) => {
               },
             });
             break;
+          }
+          case 'END_MATCH': {
+            const res = await axios.post(
+              `${process.env.MAIN_NODE_URL}/match/leave`,
+              {
+                author: { platform: 'messenger', id: messageEvent.sender.id },
+              }
+            );
+            sendMessage({
+              messaging_type: 'RESPONSE',
+              recipient: {
+                id: messageEvent.sender.id,
+              },
+              message: {
+                text: res.data.message,
+              },
+            });
+            break;
+
           }
         }
       }
