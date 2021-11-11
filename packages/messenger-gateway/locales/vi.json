@@ -1,10 +1,13 @@
 {
-  "error.failed_to_remove": "Có lỗi khi thoát hàng chờ, vui lòng chạy lại lệnh",
+	"error.failed_to_remove": "Có lỗi khi thoát hàng chờ, vui lòng chạy lại lệnh",
 	"error.already_matched": "`Hãy thoát cuộc trò chuyện hiện tại trước khi thực hiện điều này`",
 	"error.not_matched_yet": "`Bạn chưa ghép đôi với ai cả. Sử dụng lệnh !find để bắt đầu ghép đôi`",
 	"join_queue.failed": "`Có vấn đề với quá trình ghép đôi, vui lòng thử lại..`",
 	"join_queue.error": "`Có vấn đề với quá trình ghép đôi, vui lòng thử lại..`",
 	"join_queue.success": "`Đang tiến hành ghép đôi.. Có thể sử dụng lệnh !leave:queue để thoát`",
 	"match_found": "`Ghép đôi thành công, bạn có thể thoát cuộc trò chuyện bằng lệnh: !leave\nMong bạn sẽ có những trải nghiệm tích cực với Webare`",
-	"leave_match.success": "`Thoát cuộc trò chuyện thành công, bạn có thể tiếp tục bằng lệnh: !find`"
+	"leave_match.success": "`Thoát cuộc trò chuyện thành công, bạn có thể tiếp tục bằng lệnh: !find`",
+	"no_matched_yet.title": "Bắt đầu ghép đôi",
+	"no_matched_yet.subtitle": "Bắt đầu ghép đôi với một người bất kỳ bằng cách nhấn nút bắt đầu!",
+	"no_matched_yet.start_chatting": "Bắt đầu"
 }

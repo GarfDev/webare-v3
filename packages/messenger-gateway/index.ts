@@ -9,6 +9,8 @@ import { onNewMessage } from './resources/webhook/onNewMessage';
 import { EventType } from 'core/constants';
 import { getUniqueId } from 'core/utils';
 
+import { noMatchedYetTemplate } from './templates';
+
 dotenv.config();
 
 const application = async () => {
@@ -30,6 +32,7 @@ const application = async () => {
 
   socket.on(EventType.RECEIVE_MESSAGE, async (message) => {
     try {
+      console.log(message)
       await sendMessage({
         messaging_type: 'RESPONSE',
         recipient: {
@@ -49,9 +52,7 @@ const application = async () => {
         recipient: {
           id: message.receiver.uuid,
         },
-        message: {
-          text: message.content.text,
-        },
+        message: noMatchedYetTemplate,
       });
     } catch (e) {}
   });
