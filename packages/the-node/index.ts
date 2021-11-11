@@ -42,7 +42,9 @@ const application = async () => {
       const toRemoveKey = clientIdKey.reduce((pre, cur) => {
         if (clientIdSet[cur] === socket.id) return cur;
       }, '');
-      await redisClient.hDel(RedisSet.CLIENT_ID_MAP, toRemoveKey);
+      try {
+        await redisClient.hDel(RedisSet.CLIENT_ID_MAP, toRemoveKey);
+      } catch {}
     });
   });
 };

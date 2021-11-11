@@ -3,17 +3,20 @@ import dotenv from 'dotenv';
 
 import { createSocketClient } from './core/socket';
 
+import { EventType } from 'core/constants';
+import { getI18n } from 'core/i18n';
+import { getUniqueId } from 'core/utils';
+
 import { verify } from './resources/webhook/verify';
 import { sendMessage } from './resources/webhook/sendMessage';
 import { onNewMessage } from './resources/webhook/onNewMessage';
-import { EventType } from 'core/constants';
-import { getUniqueId } from 'core/utils';
 
 import { noMatchedYetTemplate } from './templates';
 
 dotenv.config();
 
 const application = async () => {
+  const i18n = getI18n();
   const app = express();
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
@@ -32,15 +35,28 @@ const application = async () => {
 
   socket.on(EventType.RECEIVE_MESSAGE, async (message) => {
     try {
-      await sendMessage({
-        messaging_type: 'RESPONSE',
-        recipient: {
-          id: message.receiver.uuid,
-        },
-        message: {
-          text: message.content.text,
-        },
-      });
+      if (message.content.system) {
+        await sendMessage({
+          messaging_type: 'RESPONSE',
+          recipient: {
+            id: message.receiver.uuid,
+          },
+          message: {
+            text: i18n.__(message.content.text),
+          },
+        });
+
+      } else {
+        await sendMessage({
+          messaging_type: 'RESPONSE',
+          recipient: {
+            id: message.receiver.uuid,
+          },
+          message: {
+            text: message.content.text,
+          },
+        });
+      }
     } catch (e) {}
   });
 
