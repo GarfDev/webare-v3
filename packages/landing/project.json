@@ -15,6 +15,7 @@
         "polyfills": "packages/landing/src/polyfills.ts",
         "tsConfig": "packages/landing/tsconfig.app.json",
         "assets": [
+          "packages/landing/src/_redirects",
           "packages/landing/src/favicon.ico",
           "packages/landing/src/assets"
         ],
