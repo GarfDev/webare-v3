@@ -67,6 +67,7 @@ export const matchFindWorker = new Worker(
     } catch (e) {}
   },
   {
+    concurrency: 1,
     connection: {
       port: Config.REDIS_PORT, // Redis port
       host: Config.REDIS_HOST, // Redis host
