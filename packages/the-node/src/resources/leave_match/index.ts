@@ -6,7 +6,7 @@ import { returnMessageQueue } from 'core/queues/returnMessageQueue';
 export const leaveMatch = async (req: Request, res: Response) => {
   try {
     const payload = req.body;
-    const redisClient = getRedisClient();
+    const redisClient = await getRedisClient();
 
     const matcherId = await redisClient.hGet(RedisSet.MATCHES_MAP, payload.author.id)
 
