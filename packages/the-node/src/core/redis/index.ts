@@ -4,17 +4,19 @@ import { Config } from 'config';
 
 let client: any = null;
 
-const createRedisClient = async () => {
+const createRedisClient = () => {
   client = createClient({ url: Config.REDIS_URL });
-  client.on('error', (err) => console.log('Redis Client Error', err));
-  await client.connect();
+  client.on('connect', () => console.log('Redis connected'));
+  client.on('error', async (err) => {
+    await client.connect()
+  });
 
   return client;
 };
 
-export const getRedisClient = async (): Promise<RedisClientType<{}, {}>> => {
+export const getRedisClient = (): RedisClientType<{}, {}> => {
   if (!client) {
-    return await createRedisClient();
+    return createRedisClient();
   } else {
     return client;
   }

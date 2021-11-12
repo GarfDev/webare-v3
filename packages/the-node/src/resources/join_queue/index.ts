@@ -6,7 +6,7 @@ import { RedisSet } from '../../core/constants/redisSet';
 
 export const joinQueue = async (req: Request, res: Response) => {
   const postPayload = req.body;
-  const redisClient = await getRedisClient();
+  const redisClient = getRedisClient();
   try {
     const matched = await redisClient.hGet(
       RedisSet.MATCHES_MAP,

@@ -1,8 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 
-import { createReturnMessage } from 'core/queues/returnMessageQueue';
-import { createMatchFindQueue } from 'core/queues/matchFindQueue';
 import { EventType } from './core/constants/eventTypes';
 import { RedisSet } from './core/constants/redisSet';
 import { onHandshake } from './listeners/onHandshake';
@@ -16,9 +14,8 @@ const application = async () => {
   const PORT = 5000;
   const app = express();
 
-  await getRedisClient();
-  await createReturnMessage();
-  await createMatchFindQueue();
+  const redis = getRedisClient();
+  await redis.connect();
 
   app.use(cors({ origin: '*' }));
   app.use(express.json());

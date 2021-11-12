@@ -16,45 +16,43 @@ export interface ReturnMessagePayload {
   };
 }
 
-export let returnMessageQueue: any = null;
+const redis = getRedisClient();
 
-export const createReturnMessage = async () => {
-  const redisClient = await getRedisClient();
-  returnMessageQueue = new Queue<ReturnMessagePayload>('return_message_queue', {
-    redis: redisClient,
+export const returnMessageQueue = new Queue<ReturnMessagePayload>(
+  'return_message_queue',
+  {
+    redis: redis,
     isWorker: true,
     stallInterval: 100,
     removeOnSuccess: true,
-  });
+  }
+);
 
-  returnMessageQueue.process(
-    async (
-      job: Job<ReturnMessagePayload>,
-      done: DoneCallback<ReturnMessagePayload>
-    ) => {
-      try {
-        const io = getSocket();
-        const redisClient = await getRedisClient();
+returnMessageQueue.process(
+  async (
+    job: Job<ReturnMessagePayload>,
+    done: DoneCallback<ReturnMessagePayload>
+  ) => {
+    try {
+      const io = getSocket();
+      const redisClient = await getRedisClient();
 
-        if (!io) return;
-
-        const cachedClientId = await redisClient.hGet(
-          RedisSet.SOCKET_ID_MAP,
-          job.data.receiver.uuid
-        );
-
-        if (!cachedClientId) return;
-
-        const cachedSocketId = await redisClient.hGet(
-          RedisSet.CLIENT_ID_MAP,
-          cachedClientId
-        );
-        if (!cachedSocketId) return;
+      const cachedClientId = await redisClient.hGet(
+        RedisSet.SOCKET_ID_MAP,
+        job.data.receiver.uuid
+      );
+      if (!cachedClientId) return;
+      const cachedSocketId = await redisClient.hGet(
+        RedisSet.CLIENT_ID_MAP,
+        cachedClientId
+      );
+      if (cachedSocketId) {
         const toEmitSocket = io.to(cachedSocketId);
         toEmitSocket.emit(EventType.RECEIVE_MESSAGE, job.data);
-      } catch (e) {}
-
-      done(null);
+      }
+    } catch (e) {
     }
-  );
-};
+
+    done(null);
+  }
+);
