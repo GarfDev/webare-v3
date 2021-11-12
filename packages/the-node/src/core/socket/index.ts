@@ -1,7 +1,7 @@
 import * as http from 'http';
 import { Server } from 'socket.io';
 
-let io: Server = null;
+let io: Server | null = null;
 
 export const createSocketServer = (server: http.Server) => {
   io = new Server(server, {

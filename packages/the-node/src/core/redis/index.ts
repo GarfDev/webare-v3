@@ -1,7 +1,7 @@
 import { createClient } from 'redis';
 import { RedisClientType } from 'redis/dist/lib/client';
 
-let client = null;
+let client: any = null;
 
 const createRedisClient = async () => {
   client = createClient({ url: 'redis://localhost:6379'
