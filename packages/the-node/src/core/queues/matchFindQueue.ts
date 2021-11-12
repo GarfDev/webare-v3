@@ -8,14 +8,17 @@ const getRandomIndex = (array: any[]): number => {
   return Math.floor(Math.random() * array.length);
 };
 
+const redisClient = getRedisClient();
+
 export const matchFindQueue = new Queue('match_find_queue', {
+  redis: redisClient,
   isWorker: true,
   stallInterval: 5000,
   delayedDebounce: 5000,
 });
 
 matchFindQueue.process(async (_: Job<any>, done: DoneCallback<any>) => {
-  const redisClient = await getRedisClient();
+  const redisClient = getRedisClient();
   let candidates = await redisClient.hKeys(MatchQueueSet.GENERAL);
   let matchedCount = 0;
 

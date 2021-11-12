@@ -16,9 +16,12 @@ export interface ReturnMessagePayload {
   };
 }
 
+const redisClient = getRedisClient();
+
 export const returnMessageQueue = new Queue<ReturnMessagePayload>(
   'return_message_queue',
   {
+    redis: redisClient,
     isWorker: true,
     stallInterval: 100,
     removeOnSuccess: true,
@@ -32,7 +35,7 @@ returnMessageQueue.process(
   ) => {
     try {
       const io = getSocket();
-      const redisClient = await getRedisClient();
+      const redisClient = getRedisClient();
 
       if (!io) return;
 

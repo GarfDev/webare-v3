@@ -6,7 +6,7 @@ import { RedisSet } from './core/constants/redisSet';
 import { onHandshake } from './listeners/onHandshake';
 import { onMessage } from './listeners/onMessages';
 
-import { getRedisClient } from './core/redis';
+import { createRedisClient, getRedisClient } from './core/redis';
 import { createSocketServer } from './core/socket';
 import { rootRouter } from './routers';
 
@@ -17,7 +17,7 @@ const application = async () => {
   app.use(cors({ origin: '*' }));
   app.use(express.json());
 
-  await getRedisClient();
+  await createRedisClient();
 
   app.use(rootRouter);
 
@@ -35,7 +35,7 @@ const application = async () => {
 
     socket.on('disconnect', async () => {
       try {
-        const redisClient = await getRedisClient();
+        const redisClient = getRedisClient();
         const clientIdSet = (await redisClient.hGetAll(
           RedisSet.CLIENT_ID_MAP
         )) as Object;
