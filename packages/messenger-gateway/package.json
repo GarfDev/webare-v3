@@ -2,12 +2,18 @@
   "name": "@webare-v3/messenger-gateway",
   "scripts": {
     "serve": "nodemon",
-    "test": "node index.js"
+    "build": "babel src --out-dir dist --extensions '.ts' --copy-files",
+    "start": "node dist/index.js"
   },
   "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "@babel/preset-typescript": "^7.16.0",
     "@types/app-root-path": "^1.2.4",
     "@types/express": "^4.17.13",
     "@types/node": "^16.11.6",
+    "babel-plugin-module-resolver": "^4.1.0",
     "nodemon": "^2.0.14",
     "ts-node": "^10.4.0",
     "tsconfig-paths": "^3.11.0",

@@ -3,9 +3,9 @@ import dotenv from 'dotenv';
 
 import { createSocketClient } from './core/socket';
 
-import { EventType } from 'core/constants';
-import { getI18n } from 'core/i18n';
-import { getUniqueId } from 'core/utils';
+import { EventType } from './core/constants';
+import { getI18n } from './core/i18n';
+import { getUniqueId } from './core/utils';
 
 import { verify } from './resources/webhook/verify';
 import { sendMessage } from './resources/webhook/sendMessage';
