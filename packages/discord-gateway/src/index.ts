@@ -58,9 +58,9 @@ export const application = () => {
     if (message.author.bot) return;
     if (message.author.id === client?.user?.id) return;
     if (message?.guild?.id) return;
-
-    switch (message.content) {
+    switch (message.content.toLowerCase()) {
       case '!find': {
+        console.log(message.content);
         const res = await axios.post(
           `${process.env.MAIN_NODE_URL}/queue/join`,
           {

@@ -6,8 +6,8 @@
   },
   "dependencies": {
     "app-root-path": "^3.0.0",
-    "bee-queue": "^1.4.0",
     "bufferutil": "^4.0.5",
+    "bullmq": "^1.52.0",
     "cors": "^2.8.5",
     "eiows": "^3.7.2",
     "express": "^4.17.1",

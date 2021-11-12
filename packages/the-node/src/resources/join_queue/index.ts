@@ -16,8 +16,9 @@ export const joinQueue = async (req: Request, res: Response) => {
       return res.send({ message: 'error.already_matched' });
     }
 
+
     await redisClient.hSet(MatchQueueSet.GENERAL, postPayload.author.id, '');
-    await matchFindQueue.createJob({}).save();
+    await matchFindQueue.add('find', {}, { delay: 5000 })
 
     return res.send({ message: 'join_queue.success' });
   } catch (e) {

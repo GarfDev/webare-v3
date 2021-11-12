@@ -21,12 +21,12 @@ export const onMessage = (
       RedisSet.MATCHES_MAP,
       args.author.uuid
     );
-    console.log(`[${args.author.platform}] ${args.content.text}`)
+    console.log(`[${args.author.platform}] ${args.content.text}`);
     if (matchedId) {
-      await returnMessageQueue.createJob({
+      await returnMessageQueue.add('message', {
         receiver: { uuid: matchedId },
         content: args.content,
-      }).save();
+      });
     } else {
       socket.emit(EventType.NO_ROUTING, {
         receiver: { uuid: args.author.uuid },

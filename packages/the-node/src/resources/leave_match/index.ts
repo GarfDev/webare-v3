@@ -13,13 +13,15 @@ export const leaveMatch = async (req: Request, res: Response) => {
     if (matcherId) {
       await redisClient.hDel(RedisSet.MATCHES_MAP, payload.author.id);
       await redisClient.hDel(RedisSet.MATCHES_MAP, matcherId);
-      await returnMessageQueue.createJob({
+
+      await returnMessageQueue.add('message', {
         receiver: { uuid: matcherId },
         content: {
           system: true,
           text: 'leave_match.other_leaved',
         },
-      }).save();
+      });
+
       return res.send({ message: 'leave_match.success', system: true })
     }
   } catch {
