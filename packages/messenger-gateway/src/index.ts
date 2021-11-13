@@ -11,7 +11,7 @@ import { verify } from './resources/webhook/verify';
 import { sendMessage } from './resources/webhook/sendMessage';
 import { onNewMessage } from './resources/webhook/onNewMessage';
 
-import { noMatchedYetTemplate } from './templates';
+import { getTemplate, noMatchedYetTemplate } from './templates';
 
 dotenv.config();
 
@@ -35,15 +35,14 @@ const application = async () => {
 
   socket.on(EventType.RECEIVE_MESSAGE, async (message) => {
     try {
+      console.log(message);
       if (message.content.system) {
         await sendMessage({
           messaging_type: 'RESPONSE',
           recipient: {
             id: message.receiver.uuid,
           },
-          message: {
-            text: i18n.__(message.content.text),
-          },
+          message: getTemplate(message.content.text),
         });
 
       } else {

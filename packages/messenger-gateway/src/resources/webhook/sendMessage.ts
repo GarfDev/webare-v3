@@ -16,7 +16,7 @@ export interface MessagePayload {
           url: string;
           webview_height_ratio: string;
         };
-        buttons: Array<{
+        buttons?: Array<{
           type: 'postback',
           title: string;
           payload: string;

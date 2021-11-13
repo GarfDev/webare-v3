@@ -5,7 +5,7 @@ import { getI18n } from 'core/i18n';
 import { EventType } from 'core/constants';
 import { getUniqueId } from 'core/utils';
 import { MessagePayload } from 'core/types';
-import { noMatchedYetTemplate } from '../../templates';
+import { getTemplate, noMatchedYetTemplate } from '../../templates';
 import { sendMessage } from './sendMessage';
 
 export const onNewMessage = (req: Request, res: Response) => {
@@ -19,8 +19,6 @@ export const onNewMessage = (req: Request, res: Response) => {
     payload.entry.forEach(async (entry) => {
       const messageEvent = entry.messaging[0];
       const uuid = messageEvent.sender.id;
-
-      console.log(messageEvent);
 
       if (messageEvent.message) {
         socket.emit(EventType.MESSAGE, {
@@ -55,9 +53,7 @@ export const onNewMessage = (req: Request, res: Response) => {
               recipient: {
                 id: messageEvent.sender.id,
               },
-              message: {
-                text: res.data.message,
-              },
+              message: getTemplate(res.data.message),
             });
             break;
           }
@@ -73,9 +69,7 @@ export const onNewMessage = (req: Request, res: Response) => {
               recipient: {
                 id: messageEvent.sender.id,
               },
-              message: {
-                text: res.data.message,
-              },
+              message: getTemplate(res.data.message),
             });
             break;
           }
