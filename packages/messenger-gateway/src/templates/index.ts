@@ -8,7 +8,6 @@ import { otherLeavedTemplate } from './other-leaved';
 const i18n = getI18n();
 
 export const getTemplate = (key: string): MessagePayload => {
-  console.log('key', key)
   switch (key) {
     case 'match_found':
       return matchedTemplate

@@ -10,6 +10,7 @@ import { getUniqueId } from './core/utils';
 import { verify } from './resources/webhook/verify';
 import { sendMessage } from './resources/webhook/sendMessage';
 import { onNewMessage } from './resources/webhook/onNewMessage';
+import { healCheck } from './resources/health-check';
 
 import { getTemplate, noMatchedYetTemplate } from './templates';
 
@@ -26,6 +27,7 @@ const application = async () => {
 
   app.get('/webhook', verify);
   app.post('/webhook', onNewMessage);
+  app.get('/health', healCheck);
 
   socket.on('connect', async () => {
     socket.emit(EventType.HANDSHAKE, {
