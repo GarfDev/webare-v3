@@ -21,7 +21,6 @@ export const onMessage = (
       RedisSet.MATCHES_MAP,
       args.author.uuid
     );
-    console.log(`[${args.author.platform}] ${args.content.text}`);
     if (matchedId) {
       await returnMessageQueue.add('message', {
         receiver: { uuid: matchedId },
