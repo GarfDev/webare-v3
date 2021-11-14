@@ -50,6 +50,7 @@ export const application = () => {
   });
 
   socket.on('connect', async () => {
+    console.log('Connected to socket')
     socket.emit(EventType.HANDSHAKE, {
       client_id: await getUniqueId(),
     });
