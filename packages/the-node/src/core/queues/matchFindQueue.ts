@@ -1,5 +1,5 @@
 import { Config } from 'config';
-import { Worker, Queue, Job } from 'bullmq';
+import { Worker, Queue, QueueScheduler, Job } from 'bullmq';
 import { MatchQueueSet } from '../constants/matchQueueSet';
 import { RedisSet } from '../constants/redisSet';
 import { getRedisClient } from '../redis';
@@ -16,6 +16,8 @@ export const matchFindQueue = new Queue('MATCH_FIND_QUEUE', {
     password: Config.REDIS_PASSWORD,
   },
 });
+
+export const matchFindQueueScheduler = new QueueScheduler('MATCH_FIND_QUEUE');
 
 export const matchFindWorker = new Worker(
   'MATCH_FIND_QUEUE',
