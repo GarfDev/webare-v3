@@ -11,6 +11,9 @@
   "join_queue_success.title": "Tham gia hàng chờ thành công",
   "join_queue_success.subtitle": "Đợi xíu nha, không lâu đâu..",
 
+  "leave_queue_success.title": "Đã rời khỏi cuộc trò chuyện hiện tại",
+  "leave_queue_success.subtitle": "Bạn có thể bắt đầu cuộc trò chuyện mới bằng cách nhấn vào nút..",
+
   "other_leaved.title": "Đối phương đã thoát",
   "other_leaved.subtitle": "Bạn có thể bắt đầu cuộc trò chuyện mới bằng cách nhấn vào nút.."
 }
