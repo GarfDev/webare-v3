@@ -41,6 +41,7 @@ export const application = () => {
 
   // When the client is ready, run this code (only once)
   client.once('ready', () => {
+    client?.user?.setActivity("DM để chat với người lạ");
     console.log('Connected to Discord')
     socket.connect();
   });
