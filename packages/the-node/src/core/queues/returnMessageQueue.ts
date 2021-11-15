@@ -51,7 +51,7 @@ export const returnMessageWorker = new Worker(
       }
       job.updateProgress(100);
       const now = new Date().getTime();
-      log.info('[Message]', `transfer take ${now - job.timestamp}ms`)
+      log.info('[Message Queue]', `transfer process take ${now - job.timestamp}ms`)
     } catch (e) {}
   },
   {

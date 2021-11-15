@@ -3,6 +3,7 @@ import type { MessagePayload } from '../resources/webhook/sendMessage';
 import { noMatchedYetTemplate } from './no-matched-yet';
 import { joinQueueSuccessTemplate } from './join-queue-success';
 import { leaveQueueSuccessTemplate } from './leave-queue-success';
+import { alreadyMatchedTemplate } from './already-matched';
 import { otherLeavedTemplate } from './other-leaved';
 import { matchedTemplate } from './matched';
 
@@ -18,6 +19,8 @@ export const getTemplate = (key: string): MessagePayload => {
       return otherLeavedTemplate;
     case 'leave_match.success':
       return leaveQueueSuccessTemplate
+    case 'error.already_matched':
+      return alreadyMatchedTemplate;
     default:
       return {
         text: i18n.__(key)

@@ -14,6 +14,10 @@
   "leave_queue_success.title": "Đã rời khỏi cuộc trò chuyện hiện tại",
   "leave_queue_success.subtitle": "Bạn có thể bắt đầu cuộc trò chuyện mới bằng cách nhấn vào nút..",
 
+  "already_matched.title": "Kết thúc cuộc trò chuyện hiện tại trước khi làm việc này",
+  "already_matched.subtitle": "Để thoát khỏi cuộc trò chuyện hiện tại, bạn có thể nhấn vào nút thoát dưới đây",
+  "already_matched.stop_chatting": "Kết thúc",
+
   "other_leaved.title": "Đối phương đã thoát",
   "other_leaved.subtitle": "Bạn có thể bắt đầu cuộc trò chuyện mới bằng cách nhấn vào nút.."
 }
