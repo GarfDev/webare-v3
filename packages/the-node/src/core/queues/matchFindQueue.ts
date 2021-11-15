@@ -1,5 +1,5 @@
-import { Config } from 'config';
 import { Worker, Queue, QueueScheduler, Job } from 'bullmq';
+import { Config } from 'config';
 import { MatchQueueSet } from '../constants/matchQueueSet';
 import { RedisSet } from '../constants/redisSet';
 import { getRedisClient } from '../redis';

@@ -1,3 +1,4 @@
+import log from 'npmlog';
 import { Worker, Queue, Job } from 'bullmq';
 
 import { getRedisClient } from '../redis';
@@ -48,8 +49,9 @@ export const returnMessageWorker = new Worker(
         const toEmitSocket = io.to(cachedSocketId);
         toEmitSocket.emit(EventType.RECEIVE_MESSAGE, job.data);
       }
-
       job.updateProgress(100);
+      const now = new Date().getTime();
+      log.info('[Message]', `transfer take ${now - job.timestamp}ms`)
     } catch (e) {}
   },
   {
