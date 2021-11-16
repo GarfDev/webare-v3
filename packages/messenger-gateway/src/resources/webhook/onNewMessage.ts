@@ -39,36 +39,58 @@ export const onNewMessage = (req: Request, res: Response) => {
             } catch (e) {}
             break;
           }
+          case 'LEAVE_QUEUE': {
+            try {
+              const res = await axios.post(
+                `${process.env.MAIN_NODE_URL}/queue/leave`,
+                {
+                  author: { platform: 'messenger', id: messageEvent.sender.id },
+                }
+              );
+              sendMessage({
+                messaging_type: 'RESPONSE',
+                recipient: {
+                  id: messageEvent.sender.id,
+                },
+                message: getTemplate(res.data.message),
+              });
+            } catch {}
+            break;
+          }
           case 'FIND_MATCH': {
-            const res = await axios.post(
-              `${process.env.MAIN_NODE_URL}/queue/join`,
-              {
-                author: { platform: 'messenger', id: messageEvent.sender.id },
-              }
-            );
-            sendMessage({
-              messaging_type: 'RESPONSE',
-              recipient: {
-                id: messageEvent.sender.id,
-              },
-              message: getTemplate(res.data.message),
-            });
+            try {
+              const res = await axios.post(
+                `${process.env.MAIN_NODE_URL}/queue/join`,
+                {
+                  author: { platform: 'messenger', id: messageEvent.sender.id },
+                }
+              );
+              sendMessage({
+                messaging_type: 'RESPONSE',
+                recipient: {
+                  id: messageEvent.sender.id,
+                },
+                message: getTemplate(res.data.message),
+              });
+            } catch {}
             break;
           }
           case 'END_MATCH': {
-            const res = await axios.post(
-              `${process.env.MAIN_NODE_URL}/match/leave`,
-              {
-                author: { platform: 'messenger', id: messageEvent.sender.id },
-              }
-            );
-            sendMessage({
-              messaging_type: 'RESPONSE',
-              recipient: {
-                id: messageEvent.sender.id,
-              },
-              message: getTemplate(res.data.message),
-            });
+            try {
+              const res = await axios.post(
+                `${process.env.MAIN_NODE_URL}/match/leave`,
+                {
+                  author: { platform: 'messenger', id: messageEvent.sender.id },
+                }
+              );
+              sendMessage({
+                messaging_type: 'RESPONSE',
+                recipient: {
+                  id: messageEvent.sender.id,
+                },
+                message: getTemplate(res.data.message),
+              });
+            } catch {}
             break;
           }
         }
