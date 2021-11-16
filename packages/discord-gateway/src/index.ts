@@ -63,7 +63,6 @@ export const application = () => {
     if (message?.guild?.id) return;
     switch (message.content.toLowerCase()) {
       case '!find': {
-        console.log(message.content);
         const res = await axios.post(
           `${process.env.MAIN_NODE_URL}/queue/join`,
           {
