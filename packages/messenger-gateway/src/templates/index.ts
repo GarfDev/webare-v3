@@ -30,6 +30,7 @@ export const getTemplate = (key: string): MessagePayload => {
 
 export {
   otherLeavedTemplate,
+  alreadyMatchedTemplate,
   leaveQueueSuccessTemplate,
   joinQueueSuccessTemplate,
   noMatchedYetTemplate,

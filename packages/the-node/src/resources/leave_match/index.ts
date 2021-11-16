@@ -26,8 +26,6 @@ export const leaveMatch = async (req: Request, res: Response) => {
     }
   } catch {
     return res.send({ message: 'error.failed_to_remove', system: true })
-
   }
   // main return
-  return res.send({ message: 'error.not_matched_yet', system: true })
 }

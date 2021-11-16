@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { getSocket } from 'core/socket';
 import { Request, Response } from 'express';
-import { getI18n } from 'core/i18n';
 import { EventType } from 'core/constants';
 import { getUniqueId } from 'core/utils';
 import { MessagePayload } from 'core/types';
@@ -10,7 +9,6 @@ import { sendMessage } from './sendMessage';
 
 export const onNewMessage = (req: Request, res: Response) => {
   try {
-    const i18n = getI18n();
     const socket = getSocket();
     const payload: MessagePayload = req.body;
 
