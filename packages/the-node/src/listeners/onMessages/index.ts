@@ -11,13 +11,13 @@ export const onMessage = (
 ) => {
   return async (args: any) => {
     const redisClient = await getRedisClient();
-    await redisClient.hSet(
+    await redisClient.hset(
       RedisSet.SOCKET_ID_MAP,
       args.author.uuid,
       args.meta.client_id
     );
 
-    const matchedId = await redisClient.hGet(
+    const matchedId = await redisClient.hget(
       RedisSet.MATCHES_MAP,
       args.author.uuid
     );

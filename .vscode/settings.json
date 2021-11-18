@@ -1,6 +1,8 @@
 {
     "cSpell.words": [
         "discordjs",
+        "hdel",
+        "hgetall",
         "mutilplatform",
         "postback",
         "webare"

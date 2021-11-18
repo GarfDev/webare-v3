@@ -19,7 +19,7 @@ export interface ReturnMessagePayload {
   };
 }
 
-const connection = new IORedis(Config.REDIS_URL, { enableReadyCheck: false, maxRetriesPerRequest: null });
+const connection = getRedisClient().duplicate();
 
 export const returnMessageQueue = new Queue<ReturnMessagePayload>(
   'return_message_queue',
@@ -33,14 +33,14 @@ export const returnMessageWorker = new Worker(
   async (job: Job) => {
     try {
       const io = getSocket();
-      const redisClient = await getRedisClient();
+      const redisClient = getRedisClient();
 
-      const cachedClientId = await redisClient.hGet(
+      const cachedClientId = await redisClient.hget(
         RedisSet.SOCKET_ID_MAP,
         job.data.receiver.uuid
       );
       if (!cachedClientId) return;
-      const cachedSocketId = await redisClient.hGet(
+      const cachedSocketId = await redisClient.hget(
         RedisSet.CLIENT_ID_MAP,
         cachedClientId
       );
@@ -49,8 +49,6 @@ export const returnMessageWorker = new Worker(
         toEmitSocket.emit(EventType.RECEIVE_MESSAGE, job.data);
       }
       job.updateProgress(100);
-      const now = new Date().getTime();
-      log.info('[Message Queue]', `transfer process take ${now - job.timestamp}ms`)
       await job.remove()
     } catch (e) {}
   },

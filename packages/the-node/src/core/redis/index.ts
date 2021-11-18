@@ -1,12 +1,14 @@
-import { createClient } from 'redis';
-import { RedisClientType } from 'redis/dist/lib/client';
+import IORedis from 'ioredis';
 import { Config } from 'config';
+import { logger } from 'logger';
 
-let client: any = null;
+let client: IORedis.Redis | null = null;
 
 const createRedisClient = () => {
-  client = createClient({ url: Config.REDIS_URL });
-  client.on('connect', () => console.log('Redis connected'));
+  client = new IORedis(Config.REDIS_URL, { enableReadyCheck: false, maxRetriesPerRequest: null });
+  client.on('connect', () => {
+    logger.info(`connected to redis server ${Config.REDIS_HOST}`)
+  });
   client.on('error', (err) => {
 
   });
@@ -14,7 +16,7 @@ const createRedisClient = () => {
   return client;
 };
 
-export const getRedisClient = (): RedisClientType<{}, {}> => {
+export const getRedisClient = (): IORedis.Redis => {
   if (!client) {
     return createRedisClient();
   } else {

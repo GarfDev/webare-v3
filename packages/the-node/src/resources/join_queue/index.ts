@@ -8,7 +8,7 @@ export const joinQueue = async (req: Request, res: Response) => {
   const postPayload = req.body;
   const redisClient = getRedisClient();
   try {
-    const matched = await redisClient.hGet(
+    const matched = await redisClient.hget(
       RedisSet.MATCHES_MAP,
       postPayload.author.id,
     );
@@ -16,7 +16,7 @@ export const joinQueue = async (req: Request, res: Response) => {
       return res.send({ message: 'error.already_matched' });
     }
 
-    await redisClient.hSet(MatchQueueSet.GENERAL, postPayload.author.id, '');
+    await redisClient.hset(MatchQueueSet.GENERAL, postPayload.author.id, '');
     await matchFindQueue.add('find', {}, { delay: 5000 })
 
     return res.send({ message: 'join_queue.success' });

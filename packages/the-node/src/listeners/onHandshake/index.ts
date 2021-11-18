@@ -10,6 +10,6 @@ export const onHandshake = (
   return async (args: any) => {
     const redisClient = await getRedisClient();
     const clientId = args.client_id;
-    redisClient.hSet(RedisSet.CLIENT_ID_MAP, clientId, socket.id)
+    redisClient.hset(RedisSet.CLIENT_ID_MAP, clientId, socket.id)
   };
 };

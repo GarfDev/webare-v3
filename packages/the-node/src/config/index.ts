@@ -8,4 +8,5 @@ export const Config = {
   REDIS_USERNAME: process.env.REDIS_USERNAME,
   REDIS_PASSWORD: process.env.REDIS_PASSWORD,
   REDIS_URL: process.env.REDIS_URL,
+  NODE_ENV: process.env.NODE_ENV,
 };

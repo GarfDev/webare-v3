@@ -6,13 +6,13 @@ import { returnMessageQueue } from 'core/queues/returnMessageQueue';
 export const leaveMatch = async (req: Request, res: Response) => {
   try {
     const payload = req.body;
-    const redisClient = await getRedisClient();
+    const redisClient = getRedisClient();
 
-    const matcherId = await redisClient.hGet(RedisSet.MATCHES_MAP, payload.author.id)
+    const matcherId = await redisClient.hget(RedisSet.MATCHES_MAP, payload.author.id)
 
     if (matcherId) {
-      await redisClient.hDel(RedisSet.MATCHES_MAP, payload.author.id);
-      await redisClient.hDel(RedisSet.MATCHES_MAP, matcherId);
+      await redisClient.hdel(RedisSet.MATCHES_MAP, payload.author.id);
+      await redisClient.hdel(RedisSet.MATCHES_MAP, matcherId);
 
       await returnMessageQueue.add('message', {
         receiver: { uuid: matcherId },

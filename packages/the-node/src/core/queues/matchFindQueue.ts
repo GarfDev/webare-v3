@@ -10,7 +10,7 @@ const getRandomIndex = (array: any[]): number => {
   return Math.floor(Math.random() * array.length);
 };
 
-const connection = new IORedis(Config.REDIS_URL, { enableReadyCheck: false, maxRetriesPerRequest: null });
+const connection = getRedisClient().duplicate();
 
 export const matchFindQueue = new Queue('MATCH_FIND_QUEUE', {
   connection,
@@ -24,7 +24,7 @@ export const matchFindWorker = new Worker(
   'MATCH_FIND_QUEUE',
   async (job: Job) => {
     const redisClient = getRedisClient();
-    let candidates = await redisClient.hKeys(MatchQueueSet.GENERAL);
+    let candidates = await redisClient.hkeys(MatchQueueSet.GENERAL);
     let matchedCount = 0;
 
     try {
@@ -42,18 +42,19 @@ export const matchFindWorker = new Worker(
         const candidateTwoIndex = getRandomIndex(candidates);
         const candidateTwo = candidates.splice(candidateTwoIndex, 1)[0];
 
-        await redisClient.hSet(
+        await redisClient.hset(
           RedisSet.MATCHES_MAP,
           candidateOne,
           candidateTwo
         );
-        await redisClient.hSet(
+        await redisClient.hset(
           RedisSet.MATCHES_MAP,
           candidateTwo,
           candidateOne
         );
-        await redisClient.hDel(MatchQueueSet.GENERAL, candidateOne);
-        await redisClient.hDel(MatchQueueSet.GENERAL, candidateTwo);
+
+        await redisClient.hdel(MatchQueueSet.GENERAL, candidateOne);
+        await redisClient.hdel(MatchQueueSet.GENERAL, candidateTwo);
 
         await returnMessageQueue.add('message', {
           receiver: { uuid: candidateOne },
