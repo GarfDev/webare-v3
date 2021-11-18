@@ -1,6 +1,4 @@
-import IORedis from 'ioredis';
-import { Worker, Queue, QueueScheduler, Job } from 'bullmq';
-import { Config } from 'config';
+import { Worker, Queue, QueueEvents, QueueScheduler, Job } from 'bullmq';
 import { MatchQueueSet } from '../constants/matchQueueSet';
 import { RedisSet } from '../constants/redisSet';
 import { getRedisClient } from '../redis';
@@ -59,12 +57,12 @@ export const matchFindWorker = new Worker(
         await returnMessageQueue.add('message', {
           receiver: { uuid: candidateOne },
           content: { text: 'match_found', system: true },
-        });
+        }, { removeOnComplete: true, removeOnFail: true });
 
         await returnMessageQueue.add('message', {
           receiver: { uuid: candidateTwo },
           content: { text: 'match_found', system: true },
-        });
+        }, { removeOnComplete: true, removeOnFail: true });
 
         matchedCount += 1;
       }
@@ -77,3 +75,12 @@ export const matchFindWorker = new Worker(
   }
 );
 
+matchFindWorker.on('completed', async (job: Job) => {
+  setTimeout(() => {
+    job.remove();
+  }, 2000)
+})
+
+matchFindWorker.on('failed', async (job: Job) => {
+  await job.retry();
+})

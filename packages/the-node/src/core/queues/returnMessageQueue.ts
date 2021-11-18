@@ -1,6 +1,6 @@
 import log from 'npmlog';
 import IORedis from 'ioredis';
-import { Worker, Queue, Job } from 'bullmq';
+import { Worker, Queue, Job, QueueEvents } from 'bullmq';
 
 import { getRedisClient } from '../redis';
 import { getSocket } from '../socket';
@@ -49,7 +49,6 @@ export const returnMessageWorker = new Worker(
         toEmitSocket.emit(EventType.RECEIVE_MESSAGE, job.data);
       }
       job.updateProgress(100);
-      await job.remove()
     } catch (e) {}
   },
   {

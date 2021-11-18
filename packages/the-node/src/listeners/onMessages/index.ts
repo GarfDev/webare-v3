@@ -25,7 +25,7 @@ export const onMessage = (
       await returnMessageQueue.add('message', {
         receiver: { uuid: matchedId },
         content: args.content,
-      });
+      }, { removeOnComplete: true, removeOnFail: true });
     } else {
       socket.emit(EventType.NO_ROUTING, {
         receiver: { uuid: args.author.uuid },

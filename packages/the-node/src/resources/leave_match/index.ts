@@ -20,7 +20,7 @@ export const leaveMatch = async (req: Request, res: Response) => {
           system: true,
           text: 'leave_match.other_leaved',
         },
-      });
+      }, { removeOnComplete: true, removeOnFail: true });
 
       return res.send({ message: 'leave_match.success', system: true })
     }
