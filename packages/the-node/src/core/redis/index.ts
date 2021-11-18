@@ -7,8 +7,8 @@ let client: any = null;
 const createRedisClient = () => {
   client = createClient({ url: Config.REDIS_URL });
   client.on('connect', () => console.log('Redis connected'));
-  client.on('error', async (err) => {
-    await client.connect()
+  client.on('error', (err) => {
+
   });
 
   return client;

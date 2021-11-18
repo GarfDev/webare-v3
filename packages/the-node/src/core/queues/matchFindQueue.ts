@@ -1,3 +1,4 @@
+import IORedis from 'ioredis';
 import { Worker, Queue, QueueScheduler, Job } from 'bullmq';
 import { Config } from 'config';
 import { MatchQueueSet } from '../constants/matchQueueSet';
@@ -9,20 +10,14 @@ const getRandomIndex = (array: any[]): number => {
   return Math.floor(Math.random() * array.length);
 };
 
+const connection = new IORedis(Config.REDIS_URL, { enableReadyCheck: false, maxRetriesPerRequest: null });
+
 export const matchFindQueue = new Queue('MATCH_FIND_QUEUE', {
-  connection: {
-    port: Config.REDIS_PORT, // Redis port
-    host: Config.REDIS_HOST, // Redis host
-    password: Config.REDIS_PASSWORD,
-  },
+  connection,
 });
 
 export const matchFindQueueScheduler = new QueueScheduler('MATCH_FIND_QUEUE', {
-  connection: {
-    port: Config.REDIS_PORT, // Redis port
-    host: Config.REDIS_HOST, // Redis host
-    password: Config.REDIS_PASSWORD,
-  },
+  connection,
 });
 
 export const matchFindWorker = new Worker(
@@ -77,11 +72,7 @@ export const matchFindWorker = new Worker(
   },
   {
     concurrency: 1,
-    connection: {
-      port: Config.REDIS_PORT, // Redis port
-      host: Config.REDIS_HOST, // Redis host
-      password: Config.REDIS_PASSWORD,
-    },
+    connection,
   }
 );
 

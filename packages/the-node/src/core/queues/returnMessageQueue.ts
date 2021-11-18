@@ -1,4 +1,5 @@
 import log from 'npmlog';
+import IORedis from 'ioredis';
 import { Worker, Queue, Job } from 'bullmq';
 
 import { getRedisClient } from '../redis';
@@ -18,14 +19,12 @@ export interface ReturnMessagePayload {
   };
 }
 
+const connection = new IORedis(Config.REDIS_URL, { enableReadyCheck: false, maxRetriesPerRequest: null });
+
 export const returnMessageQueue = new Queue<ReturnMessagePayload>(
   'return_message_queue',
   {
-    connection: {
-      port: Config.REDIS_PORT, // Redis port
-      host: Config.REDIS_HOST, // Redis host
-      password: Config.REDIS_PASSWORD,
-    },
+    connection,
   }
 );
 
@@ -57,10 +56,6 @@ export const returnMessageWorker = new Worker(
   },
   {
     concurrency: 50,
-    connection: {
-      port: Config.REDIS_PORT, // Redis port
-      host: Config.REDIS_HOST, // Redis host
-      password: Config.REDIS_PASSWORD,
-    },
+    connection,
   }
 );
