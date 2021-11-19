@@ -19,7 +19,7 @@ export interface ReturnMessagePayload {
   };
 }
 
-const connection = getRedisClient().duplicate();
+const connection = getRedisClient();
 
 export const returnMessageQueue = new Queue<ReturnMessagePayload>(
   'return_message_queue',

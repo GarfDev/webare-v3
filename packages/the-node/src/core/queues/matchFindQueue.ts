@@ -8,7 +8,7 @@ const getRandomIndex = (array: any[]): number => {
   return Math.floor(Math.random() * array.length);
 };
 
-const connection = getRedisClient().duplicate();
+const connection = getRedisClient();
 
 export const matchFindQueue = new Queue('MATCH_FIND_QUEUE', {
   connection,
@@ -54,15 +54,23 @@ export const matchFindWorker = new Worker(
         await redisClient.hdel(MatchQueueSet.GENERAL, candidateOne);
         await redisClient.hdel(MatchQueueSet.GENERAL, candidateTwo);
 
-        await returnMessageQueue.add('message', {
-          receiver: { uuid: candidateOne },
-          content: { text: 'match_found', system: true },
-        }, { removeOnComplete: true, removeOnFail: true });
+        await returnMessageQueue.add(
+          'message',
+          {
+            receiver: { uuid: candidateOne },
+            content: { text: 'match_found', system: true },
+          },
+          { removeOnComplete: true, removeOnFail: true }
+        );
 
-        await returnMessageQueue.add('message', {
-          receiver: { uuid: candidateTwo },
-          content: { text: 'match_found', system: true },
-        }, { removeOnComplete: true, removeOnFail: true });
+        await returnMessageQueue.add(
+          'message',
+          {
+            receiver: { uuid: candidateTwo },
+            content: { text: 'match_found', system: true },
+          },
+          { removeOnComplete: true, removeOnFail: true }
+        );
 
         matchedCount += 1;
       }
@@ -78,9 +86,9 @@ export const matchFindWorker = new Worker(
 matchFindWorker.on('completed', async (job: Job) => {
   setTimeout(() => {
     job.remove();
-  }, 2000)
-})
+  }, 2000);
+});
 
 matchFindWorker.on('failed', async (job: Job) => {
   await job.retry();
-})
+});
