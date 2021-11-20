@@ -47,6 +47,7 @@ export const onNewMessage = (req: Request, res: Response) => {
                   author: { platform: 'messenger', id: messageEvent.sender.id },
                 }
               );
+              console.log(res.data.message)
               sendMessage({
                 messaging_type: 'RESPONSE',
                 recipient: {

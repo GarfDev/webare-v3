@@ -6,18 +6,20 @@
 	"no_matched_yet.start_chatting": "Bắt đầu",
 	"match_found": "match_found",
 	"leave_match.other_leaved": "leave_match.other_leaved",
+	"join_queue_success.cancel": "Cancel",
+	"join_queue_success.title": "Tham gia hàng chờ thành công",
+	"join_queue_success.subtitle": "Đợi xíu nha, không lâu đâu..",
+	"already_matched.title": "Kết thúc cuộc trò chuyện hiện tại trước khi làm việc này",
+	"already_matched.subtitle": "Để thoát khỏi cuộc trò chuyện hiện tại, bạn có thể nhấn vào nút thoát dưới đây",
+	"already_matched.stop_chatting": "Kết thúc",
+	"other_leaved.title": "Đối phương đã thoát",
+	"other_leaved.subtitle": "Bạn có thể bắt đầu cuộc trò chuyện mới bằng cách nhấn vào nút..",
 
-  "join_queue_success.cancel": "Cancel",
-  "join_queue_success.title": "Tham gia hàng chờ thành công",
-  "join_queue_success.subtitle": "Đợi xíu nha, không lâu đâu..",
+	"leave_queue.success": "leave_queue.success",
 
-  "leave_queue_success.title": "Đã rời khỏi cuộc trò chuyện hiện tại",
-  "leave_queue_success.subtitle": "Bạn có thể bắt đầu cuộc trò chuyện mới bằng cách nhấn vào nút..",
+	"leave_match_success.title": "Đã rời khỏi cuộc trò chuyện hiện tại",
+	"leave_match_success.subtitle": "Bạn có thể bắt đầu cuộc trò chuyện mới bằng cách nhấn vào nút..",
 
-  "already_matched.title": "Kết thúc cuộc trò chuyện hiện tại trước khi làm việc này",
-  "already_matched.subtitle": "Để thoát khỏi cuộc trò chuyện hiện tại, bạn có thể nhấn vào nút thoát dưới đây",
-  "already_matched.stop_chatting": "Kết thúc",
-
-  "other_leaved.title": "Đối phương đã thoát",
-  "other_leaved.subtitle": "Bạn có thể bắt đầu cuộc trò chuyện mới bằng cách nhấn vào nút.."
+	"leave_queue_success.title": "Thoát khỏi hàng chờ thành công",
+	"leave_queue_success.subtitle": "Bạn có thể tiếp tục tham gia hàng chờ bằng cách nhấn vào nút"
 }

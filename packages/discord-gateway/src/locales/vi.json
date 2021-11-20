@@ -1,6 +1,6 @@
 {
   "error.failed_to_remove": "Có lỗi khi thoát hàng chờ, vui lòng chạy lại lệnh",
-	"error.already_matched": "`Hãy thoát cuộc trò chuyện hiện tại trước khi thực hiện điều này`",
+	"error.already_matched": "`Hãy thoát cuộc trò chuyện hiện tại trước khi thực hiện điều này [lệnh !leave]`",
 	"error.not_matched_yet": "`Bạn chưa ghép đôi với ai cả. Sử dụng lệnh !find để bắt đầu ghép đôi`",
 	"join_queue.failed": "`Có vấn đề với quá trình ghép đôi, vui lòng thử lại..`",
 	"join_queue.error": "`Có vấn đề với quá trình ghép đôi, vui lòng thử lại..`",
