@@ -1,6 +1,6 @@
 import log from 'npmlog';
 import IORedis from 'ioredis';
-import { Worker, Queue, Job, QueueEvents } from 'bullmq';
+import { Worker, Queue, Job, QueueEvents, QueueScheduler } from 'bullmq';
 
 import { getRedisClient } from '../redis';
 import { getSocket } from '../socket';
@@ -22,6 +22,22 @@ export interface ReturnMessagePayload {
 const connection = getRedisClient();
 
 export const returnMessageQueue = new Queue<ReturnMessagePayload>(
+  'return_message_queue',
+  {
+    connection,
+    defaultJobOptions: {
+      removeOnFail: true,
+      removeOnComplete: true,
+      attempts: 3,
+      backoff: {
+        type: 'exponential',
+        delay: 1000,
+      },
+    },
+  }
+);
+
+export const returnMessageScheduler = new QueueScheduler(
   'return_message_queue',
   {
     connection,

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getRedisClient } from '../../core/redis'
+import { getRedisClient } from '../../core/redis';
 import { RedisSet } from '../../core/constants/redisSet';
 import { returnMessageQueue } from 'core/queues/returnMessageQueue';
 
@@ -8,7 +8,10 @@ export const leaveMatch = async (req: Request, res: Response) => {
     const payload = req.body;
     const redisClient = getRedisClient();
 
-    const matcherId = await redisClient.hget(RedisSet.MATCHES_MAP, payload.author.id)
+    const matcherId = await redisClient.hget(
+      RedisSet.MATCHES_MAP,
+      payload.author.id
+    );
 
     if (matcherId) {
       await redisClient.hdel(RedisSet.MATCHES_MAP, payload.author.id);
@@ -20,12 +23,12 @@ export const leaveMatch = async (req: Request, res: Response) => {
           system: true,
           text: 'leave_match.other_leaved',
         },
-      }, { removeOnComplete: true, removeOnFail: true });
+      });
 
-      return res.send({ message: 'leave_match.success', system: true })
+      return res.send({ message: 'leave_match.success', system: true });
     }
   } catch {
-    return res.send({ message: 'error.failed_to_remove', system: true })
+    return res.send({ message: 'error.failed_to_remove', system: true });
   }
   // main return
-}
+};

@@ -54,23 +54,15 @@ export const matchFindWorker = new Worker(
         await redisClient.hdel(MatchQueueSet.GENERAL, candidateOne);
         await redisClient.hdel(MatchQueueSet.GENERAL, candidateTwo);
 
-        await returnMessageQueue.add(
-          'message',
-          {
-            receiver: { uuid: candidateOne },
-            content: { text: 'match_found', system: true },
-          },
-          { removeOnComplete: true, removeOnFail: true }
-        );
+        await returnMessageQueue.add('message', {
+          receiver: { uuid: candidateOne },
+          content: { text: 'match_found', system: true },
+        });
 
-        await returnMessageQueue.add(
-          'message',
-          {
-            receiver: { uuid: candidateTwo },
-            content: { text: 'match_found', system: true },
-          },
-          { removeOnComplete: true, removeOnFail: true }
-        );
+        await returnMessageQueue.add('message', {
+          receiver: { uuid: candidateTwo },
+          content: { text: 'match_found', system: true },
+        });
 
         matchedCount += 1;
       }
