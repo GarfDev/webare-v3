@@ -40,7 +40,13 @@
       "style": "styl",
       "linter": "eslint",
       "unitTestRunner": "none"
+    },
+    "@nrwl/next": {
+      "application": {
+        "style": "styled-components",
+        "linter": "eslint"
+      }
     }
   },
-  "defaultProject": "website"
+  "defaultProject": "web-application"
 }

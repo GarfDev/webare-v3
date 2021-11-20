@@ -9,9 +9,9 @@ A cross-platform bot that creating anonymous conversations
 # Platforms supported
 
 - [X] Discord
-- [X] Website
+- [ ] Website
 - [ ] Mobile
-- [ ] Messenger
+- [X] Messenger
 - [ ] Instagram
 - [ ] Zalo
 - [ ] Telegram

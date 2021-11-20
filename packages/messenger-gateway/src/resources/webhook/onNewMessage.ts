@@ -18,6 +18,8 @@ export const onNewMessage = (req: Request, res: Response) => {
       const messageEvent = entry.messaging[0];
       const uuid = messageEvent.sender.id;
 
+        console.log(JSON.stringify(entry));
+
       if (messageEvent.message) {
         socket.emit(EventType.MESSAGE, {
           meta: { client_id: await getUniqueId() },
