@@ -1,10 +1,21 @@
 {
     "cSpell.words": [
+        "backoff",
+        "bullmq",
+        "cacheable",
         "discordjs",
         "hdel",
+        "hget",
         "hgetall",
+        "hkeys",
+        "hset",
         "mutilplatform",
+        "npmlog",
+        "nrwl",
         "postback",
-        "webare"
+        "styl",
+        "webare",
+        "Whatapp",
+        "Zalo"
     ]
 }

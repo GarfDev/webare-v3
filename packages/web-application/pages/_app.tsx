@@ -1,21 +1,20 @@
+import React from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import { Reset } from '../global/styles/reset';
+
 import './styles.css';
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Welcome to web-application!</title>
+        <title>Webare | Connecting Stories</title>
       </Head>
       <div className="app">
-        <header className="flex">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/nx-logo-white.svg" alt="Nx logo" width="75" height="50" />
-          <h1>Welcome to web-application!</h1>
-        </header>
         <main>
           <Component {...pageProps} />
+          <Reset />
         </main>
       </div>
     </>
