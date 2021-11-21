@@ -32,9 +32,24 @@ export const NavigationBar = (): JSX.Element => {
           href="https://dsc.gg/webare"
         >
           <Image
-            alt="Facebook"
+            alt="Discord"
             objectFit="contain"
             src="/assets/icons/discord.svg"
+            layout="fixed"
+            height="24px"
+            width="24px"
+          />
+        </Link>
+
+        <Link
+          target="_blank"
+          rel="noreferrer"
+          href="https://github.com/garfdev/webare-v3"
+        >
+          <Image
+            alt="Github"
+            objectFit="contain"
+            src="/assets/icons/github.svg"
             layout="fixed"
             height="24px"
             width="24px"

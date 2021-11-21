@@ -9,7 +9,7 @@ export function Index(): JSX.Element {
     <>
       <Main />
     </>
-  )
+  );
 }
 
 export default Index;
@@ -29,9 +29,14 @@ function Main() {
           từ những mạng xã hội khác nhau, một cách ẩn danh. Webare tin rằng đây
           là một hình thức tốt để khơi gợi những cuộc trò chuyện cởi mở hơn.
         </Text>
-        <Button>mời bot về discord</Button>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://discord.com/api/oauth2/authorize?client_id=806017131060658196&permissions=120833&scope=bot"
+        >
+          <Button>mời bot về discord</Button>
+        </a>
       </Content>
-
     </MainSection>
   );
 }
@@ -69,8 +74,12 @@ const Button = styled.button`
   padding: 20px 40px;
   border-radius: 5px;
   text-transform: uppercase;
-  background-color: #DEB47D;
+  background-color: #eba346;
+  transition-duration: 200ms;
   max-width: 400px;
+  cursor: pointer;
 
-`
-
+  &:hover {
+    background-color: #eeb263;
+  }
+`;
