@@ -18,7 +18,6 @@ export const NavigationBar = (): JSX.Element => {
         >
           <Image
             alt="Facebook"
-            objectFit="contain"
             src="/assets/icons/facebook.svg"
             layout="fixed"
             height="24px"
@@ -33,7 +32,6 @@ export const NavigationBar = (): JSX.Element => {
         >
           <Image
             alt="Discord"
-            objectFit="contain"
             src="/assets/icons/discord.svg"
             layout="fixed"
             height="24px"
@@ -48,7 +46,6 @@ export const NavigationBar = (): JSX.Element => {
         >
           <Image
             alt="Github"
-            objectFit="contain"
             src="/assets/icons/github.svg"
             layout="fixed"
             height="24px"

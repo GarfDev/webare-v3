@@ -2,8 +2,9 @@ import { createGlobalStyle } from 'styled-components';
 
 export const Reset = createGlobalStyle`
   *, *:before, *:after{
-      box-sizing: border-box;
+    box-sizing: border-box;
   }
+
 
   html, body, div, span, object, iframe, figure, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, code, em, img, small, strike, strong, sub, sup, tt, b, u, i, ol, ul, li, fieldset, form, label, table, caption, tbody, tfoot, thead, tr, th, td, main, canvas, embed, button, footer, header, nav, section, video{
       margin: 0;

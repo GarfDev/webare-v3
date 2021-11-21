@@ -23,10 +23,12 @@ export default class CustomDocument extends Document<{
       <Html>
         <Head>
           {this.props.styleTags}
+
           <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Montserrat&subset=vietnamese&display=optional"
+            href="https://fonts.googleapis.com/css?family=Montserrat&subset=vietnamese&display=swap"
           />
+
         </Head>
         <body>
           <Main />
