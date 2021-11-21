@@ -21,7 +21,13 @@ export default class CustomDocument extends Document<{
   render() {
     return (
       <Html>
-        <Head>{this.props.styleTags}</Head>
+        <Head>
+          {this.props.styleTags}
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Montserrat&subset=vietnamese&display=optional"
+          />
+        </Head>
         <body>
           <Main />
           <NextScript />

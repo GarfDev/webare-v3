@@ -5,7 +5,7 @@ export const Reset = createGlobalStyle`
       box-sizing: border-box;
   }
 
-  html, body, div, span, object, iframe, figure, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, code, em, img, small, strike, strong, sub, sup, tt, b, u, i, ol, ul, li, fieldset, form, label, table, caption, tbody, tfoot, thead, tr, th, td, main, canvas, embed, footer, header, nav, section, video{
+  html, body, div, span, object, iframe, figure, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, code, em, img, small, strike, strong, sub, sup, tt, b, u, i, ol, ul, li, fieldset, form, label, table, caption, tbody, tfoot, thead, tr, th, td, main, canvas, embed, button, footer, header, nav, section, video{
       margin: 0;
       padding: 0;
       border: 0;
@@ -14,6 +14,7 @@ export const Reset = createGlobalStyle`
       vertical-align: baseline;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
+      font-family: Montserrat;
       text-size-adjust: none;
   }
 
