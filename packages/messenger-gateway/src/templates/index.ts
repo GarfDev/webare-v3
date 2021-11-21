@@ -4,6 +4,7 @@ import { noMatchedYetTemplate } from './no-matched-yet';
 import { joinQueueSuccessTemplate } from './join-queue-success';
 import { leaveQueueSuccessTemplate } from './leave-queue-success';
 import { leaveMatchSuccessTemplate } from './leave-match-success';
+import { noMatchedQueuedTemplate } from './no-matched-queued';
 import { alreadyMatchedTemplate } from './already-matched';
 import { otherLeavedTemplate } from './other-leaved';
 import { matchedTemplate } from './matched';
@@ -32,6 +33,7 @@ export const getTemplate = (key: string): MessagePayload => {
 }
 
 export {
+  noMatchedQueuedTemplate,
   otherLeavedTemplate,
   alreadyMatchedTemplate,
   leaveQueueSuccessTemplate,

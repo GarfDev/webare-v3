@@ -12,7 +12,11 @@ import { sendMessage } from './resources/webhook/sendMessage';
 import { onNewMessage } from './resources/webhook/onNewMessage';
 import { healCheck } from './resources/health-check';
 
-import { getTemplate, noMatchedYetTemplate } from './templates';
+import {
+  getTemplate,
+  noMatchedQueuedTemplate,
+  noMatchedYetTemplate,
+} from './templates';
 
 dotenv.config();
 
@@ -45,7 +49,6 @@ const application = async () => {
           },
           message: getTemplate(message.content.text),
         });
-
       } else {
         await sendMessage({
           messaging_type: 'RESPONSE',
@@ -67,7 +70,9 @@ const application = async () => {
         recipient: {
           id: message.receiver.uuid,
         },
-        message: noMatchedYetTemplate,
+        message: message.content.text?.includes('queued')
+          ? noMatchedQueuedTemplate
+          : noMatchedYetTemplate,
       });
     } catch (e) {}
   });

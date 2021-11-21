@@ -5,6 +5,7 @@ import { RedisSet } from '../../core/constants/redisSet';
 import { getRedisClient } from '../../core/redis';
 
 import { returnMessageQueue } from '../../core/queues/returnMessageQueue';
+import { MatchQueueSet } from 'core/constants/matchQueueSet';
 
 export const onMessage = (
   socket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap>
@@ -21,17 +22,25 @@ export const onMessage = (
       RedisSet.MATCHES_MAP,
       args.author.uuid
     );
+
     if (matchedId) {
       await returnMessageQueue.add('message', {
         receiver: { uuid: matchedId },
         content: args.content,
       });
     } else {
+      const isQueued = await redisClient.hget(
+        MatchQueueSet.GENERAL,
+        args.author.uuid
+      );
+
       socket.emit(EventType.NO_ROUTING, {
         receiver: { uuid: args.author.uuid },
         content: {
           system: true,
-          text: 'error.not_matched_yet',
+          text: isQueued
+            ? 'error.not_matched_yet_queued'
+            : 'error.not_matched_yet',
         },
       });
     }
