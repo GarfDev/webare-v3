@@ -31,42 +31,57 @@ export const matchFindWorker = new Worker(
           break;
         }
 
-        /**
-         * Match logic
-         */
-
         const candidateOneIndex = getRandomIndex(candidates);
         const candidateOne = candidates.splice(candidateOneIndex, 1)[0];
         const candidateTwoIndex = getRandomIndex(candidates);
         const candidateTwo = candidates.splice(candidateTwoIndex, 1)[0];
 
-        await redisClient.hset(
-          RedisSet.MATCHES_MAP,
-          candidateOne,
-          candidateTwo
-        );
-        await redisClient.hset(
-          RedisSet.MATCHES_MAP,
-          candidateTwo,
-          candidateOne
-        );
+        /**
+         * Match logic
+         */
+        try {
+            await redisClient.hdel(MatchQueueSet.GENERAL, candidateOne);
+            await redisClient.hdel(MatchQueueSet.GENERAL, candidateTwo);
+            job.updateProgress(30);
 
-        await redisClient.hdel(MatchQueueSet.GENERAL, candidateOne);
-        await redisClient.hdel(MatchQueueSet.GENERAL, candidateTwo);
+            await redisClient.hset(
+              RedisSet.MATCHES_MAP,
+              candidateOne,
+              candidateTwo
+            );
+            await redisClient.hset(
+              RedisSet.MATCHES_MAP,
+              candidateTwo,
+              candidateOne
+            );
+            job.updateProgress(60);
 
-        await returnMessageQueue.add('message', {
-          receiver: { uuid: candidateOne },
-          content: { text: 'match_found', system: true },
-        });
+            await returnMessageQueue.add('message', {
+              receiver: { uuid: candidateOne },
+              content: { text: 'match_found', system: true },
+            });
 
-        await returnMessageQueue.add('message', {
-          receiver: { uuid: candidateTwo },
-          content: { text: 'match_found', system: true },
-        });
+            await returnMessageQueue.add('message', {
+              receiver: { uuid: candidateTwo },
+              content: { text: 'match_found', system: true },
+            });
+            job.updateProgress(90);
+            matchedCount += 1;
+            job.updateProgress(100);
+          } catch {
+            if (job.progress >= 30) {
+              // Add Candidate back to queue if something wrong
+              await redisClient.hset(MatchQueueSet.GENERAL, candidateOne);
+              await redisClient.hset(MatchQueueSet.GENERAL, candidateTwo);
+              if (job.progress >= 60) {
+                await redisClient.del(RedisSet.MATCHES_MAP, candidateOne);
+                await redisClient.del(RedisSet.MATCHES_MAP, candidateTwo);
+              }
+            }
+          }
+        }
 
-        matchedCount += 1;
-      }
-      return matchedCount;
+        return matchedCount;
     } catch (e) {}
   },
   {

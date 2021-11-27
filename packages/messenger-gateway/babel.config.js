@@ -1,5 +1,6 @@
 module.exports = {
   "plugins": [
+    'transform-remove-console',
     ["module-resolver", {
       "root": ["./src"],
       "extensions": [
