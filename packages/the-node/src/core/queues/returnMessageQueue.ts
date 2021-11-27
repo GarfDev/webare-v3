@@ -7,15 +7,24 @@ import { getSocket } from '../socket';
 
 import { RedisSet } from '../constants/redisSet';
 import { EventType } from '../constants/eventTypes';
-import { Config } from 'config';
+
+
+export interface ReturnMessageAttachment {
+  type: 'image' | 'audio' | 'video' | 'file' | 'location',
+  payload: {
+    url?: string;
+    sticker_id?: string;
+  }
+}
 
 export interface ReturnMessagePayload {
   receiver: {
     uuid: string;
   };
   content: {
+    attachment?: ReturnMessageAttachment;
     system?: boolean;
-    text: string;
+    text?: string;
   };
 }
 

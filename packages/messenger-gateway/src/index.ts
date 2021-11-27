@@ -57,6 +57,7 @@ const application = async () => {
           },
           message: {
             text: message.content.text,
+            attachment: message.content.attachment,
           },
         });
       }

@@ -6,9 +6,12 @@ export interface Recipient {
   id: string;
 }
 
+export interface MessageAttachment { type: 'string', payload: { url?: string, sticker_id?: string } }
+
 export interface Message {
   mid: string;
-  text: string;
+  text?: string;
+  attachments?: MessageAttachment[];
 }
 
 export interface Postback {

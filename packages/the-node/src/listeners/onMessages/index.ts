@@ -11,8 +11,8 @@ export const onMessage = (
   socket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap>
 ) => {
   return async (args: any) => {
-    const redisClient = await getRedisClient();
-    await redisClient.hset(
+    const redisClient = getRedisClient();
+    redisClient.hset(
       RedisSet.SOCKET_ID_MAP,
       args.author.uuid,
       args.meta.client_id
