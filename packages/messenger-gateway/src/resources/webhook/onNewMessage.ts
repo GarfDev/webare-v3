@@ -49,6 +49,24 @@ export const onNewMessage = (req: Request, res: Response) => {
             } catch (e) {}
             break;
           }
+          case 'TOGGLE_ATTACHMENT': {
+            try {
+              const res = await axios.post(
+                `${process.env.MAIN_NODE_URL}/match/attachment`,
+                {
+                  author: { platform: 'messenger', id: messageEvent.sender.id },
+                }
+              );
+              sendMessage({
+                messaging_type: 'RESPONSE',
+                recipient: {
+                  id: messageEvent.sender.id,
+                },
+                message: getTemplate(res.data.message),
+              });
+            } catch {}
+            break;
+          }
           case 'LEAVE_QUEUE': {
             try {
               const res = await axios.post(

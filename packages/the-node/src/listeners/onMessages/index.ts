@@ -24,6 +24,29 @@ export const onMessage = (
     );
 
     if (matchedId) {
+      if (args.content.attachment) {
+        const userAllowed = await redisClient.hget(
+          RedisSet.ATTACHMENT_ALLOWANCE,
+          args.author.uuid
+        );
+        const otherAllowed = await redisClient.hget(
+          RedisSet.ATTACHMENT_ALLOWANCE,
+          matchedId
+        );
+
+        const bothAllowed = userAllowed && otherAllowed
+
+        if (!bothAllowed) {
+          return await returnMessageQueue.add('message', {
+            receiver: { uuid: args.author.uuid },
+            content: {
+              system: true,
+              text: 'error.other_not_allow_attachment',
+            },
+          });
+        }
+      }
+
       await returnMessageQueue.add('message', {
         receiver: { uuid: matchedId },
         content: args.content,

@@ -16,6 +16,9 @@ export const leaveMatch = async (req: Request, res: Response) => {
     if (matcherId) {
       await redisClient.hdel(RedisSet.MATCHES_MAP, payload.author.id);
       await redisClient.hdel(RedisSet.MATCHES_MAP, matcherId);
+      // Remove attachment allowance
+      await redisClient.hdel(RedisSet.ATTACHMENT_ALLOWANCE, payload.author.id);
+      await redisClient.hdel(RedisSet.ATTACHMENT_ALLOWANCE, matcherId);
 
       await returnMessageQueue.add('message', {
         receiver: { uuid: matcherId },
