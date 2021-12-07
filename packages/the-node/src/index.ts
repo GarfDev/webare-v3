@@ -34,7 +34,7 @@ const application = async () => {
 
     socket.on('disconnect', async () => {
       try {
-        const redisClient = await getRedisClient();
+        const redisClient = getRedisClient();
         const clientIdSet = (await redisClient.hgetall(
           RedisSet.CLIENT_ID_MAP
         )) as Object;

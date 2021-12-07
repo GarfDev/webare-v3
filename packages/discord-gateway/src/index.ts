@@ -20,7 +20,6 @@ export enum EventType {
 
 // Create a new client instance
 export const application = () => {
-
   // preflight checks
   if (!process?.env?.MAIN_NODE_URL) {
     throw new Error('MAIN_NODE_URL is missing');
@@ -41,8 +40,8 @@ export const application = () => {
 
   // When the client is ready, run this code (only once)
   client.once('ready', () => {
-    client?.user?.setActivity("DM để chat với người lạ");
-    console.log('Connected to Discord')
+    client?.user?.setActivity('DM để chat với người lạ');
+    console.log('Connected to Discord');
     socket.connect();
   });
 
@@ -51,7 +50,7 @@ export const application = () => {
   });
 
   socket.on('connect', async () => {
-    console.log('Connected to socket')
+    console.log('Connected to socket');
     socket.emit(EventType.HANDSHAKE, {
       client_id: await getUniqueId(),
     });
@@ -92,12 +91,34 @@ export const application = () => {
         message.channel.send(i18n.__(res.data.message));
         break;
       }
-      default:
-        socket.emit(EventType.MESSAGE, {
+      case '!attachment': {
+        const res = await axios.post(
+          `${process.env.MAIN_NODE_URL}/match/attachment`,
+          {
+            author: { platform: 'discord', id: message.author.id },
+          }
+        );
+        message.channel.send(i18n.__(res.data.message));
+        break;
+      }
+      default: {
+        const payload: any = {
           meta: { client_id: await getUniqueId() },
           author: { platform: 'discord', uuid: message.author.id },
           content: { text: message.content },
-        });
+        };
+
+        const attachmentArr = Array.from(message.attachments.values());
+
+        payload.content['attachment'] = attachmentArr[0] && {
+          type: attachmentArr[0].contentType?.split('/')[0],
+          payload: {
+            url: attachmentArr[0].url,
+          },
+        };
+
+        socket.emit(EventType.MESSAGE, payload);
+      }
     }
   });
 
@@ -108,6 +129,9 @@ export const application = () => {
         channel.send(i18n.__(message.content.text));
       } else {
         channel.send(message.content.text);
+        if (message.content.attachment) {
+          channel.send(message.content.attachment.payload.url);
+        }
       }
     } catch (e) {}
   });

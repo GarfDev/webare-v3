@@ -9,5 +9,8 @@
 	"match_found": "`Ghép đôi thành công, bạn có thể thoát cuộc trò chuyện bằng lệnh: !leave\nMong bạn sẽ có những trải nghiệm tích cực với Webare`",
 	"leave_match.success": "`Thoát cuộc trò chuyện thành công, bạn có thể tiếp tục bằng lệnh: !find`",
 	"leave_match.other_leaved": "`Người kia đã thoát khỏi cuộc trò chuyện hiện tại, bạn có thể bắt đầu một cuộc trò chuyện mới bằng lệnh: !find`",
-	"allow_attachment.other_allowed": "allow_attachment.other_allowed"
+	"allow_attachment.other_allowed": "`Đối phương đã chấp nhận đính kèm trong tin nhắn, bạn cũng có thể chấp nhận bằng cách sử dụng lệnh: !attachment`",
+	"allow_attachment.turned_on": "`Bạn đã thành công chấp nhận đính kèm trong tin nhắn`",
+	"allow_attachment.both_allowed": "`Bạn và đối phương đã có thể gửi/nhận đính kèm trong cuộc trò chuyện này`",
+	"error.other_not_allow_attachment": "`Cần sự đồng ý của cả 2 bên để có thể gửi/nhận đính kèm trong tin nhắn, bạn có thể chấp nhận bằng lệnh: !attachment`"
 }
